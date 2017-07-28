@@ -12,7 +12,7 @@ module.exports = {
         libraryTarget: "umd",
         library: "onix",
         path: path.join(__dirname, "public"),
-		filename: "chess-game.[name].js"
+		filename: "chess-analyse.[name].js"
     },
 
     plugins:[
