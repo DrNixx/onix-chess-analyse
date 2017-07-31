@@ -4,6 +4,9 @@
   "description": "Chess game analyser",
   "main": "built/index.js",
   "scripts": {
+    "build": "tsc && webpack",
+    "webpack": "webpack",
+    "publish": "tsc && webpack --config webpack.production.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +25,8 @@
   },
   "homepage": "https://github.com/DrNixx/onix-chess-analyse#readme",
   "dependencies": {
+    "onix-core": "^1.1.24",
+    "onix-ui": "^1.0.23",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "recharts": "^1.0.0-alpha.2",

@@ -1,4 +1,4 @@
-
+import { intVal } from 'onix-core';
 import { AnalysisJudgment } from "./AnalysisJudgment";
 
 export class AnalysisItem {
@@ -10,7 +10,7 @@ export class AnalysisItem {
 
     public ceil?: number;
 
-    public pawn?: number;
+    public advantage?: number;
 
     public evalPawn?: number;
 
@@ -25,6 +25,14 @@ export class AnalysisItem {
     public depth?: number;
 
     public time?: number;
+
+    public color?: boolean;
+
+    public turn?: number;
+
+    public name?: string;
+
+    public desc?: string;
 
     public constructor(raw) {
         this.ply = raw.ply;
@@ -56,6 +64,17 @@ export class AnalysisItem {
         }
 
         this.evalPawn = this.eval / 100;
-        this.pawn = this.ceil / 100;
+        this.advantage = this.ceil / 100;
+        this.desc = "";
+        if (this.mate) {
+            this.desc = "Mate in #" + this.mate;
+        } else {
+            this.desc = (this.advantage > 0) ? "+" : "";
+            this.desc += this.advantage;
+        }
+
+        this.turn = intVal(1 + (this.ply - 1) / 2);
+        const color = this.ply % 2 == 1;
+        this.name = "" + this.turn + (color ? ". " : "... ") + this.move;
     }
 }
