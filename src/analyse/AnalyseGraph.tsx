@@ -7,6 +7,7 @@ import { AnalysisResult } from "./AnalysisResult";
 export interface AnalyseGraphProps {
     result?: AnalysisResult
     onRequestAnalyse?: () => void
+    onPlyClick?: (ply: number) => void
 }
 
 export interface AnalyseGraphState {
@@ -33,6 +34,10 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, AnalyseGrap
         );
     }
 
+    private anTooltipLblFmt = (...params) => {
+        return "";
+    }
+
     private requestAnalysis = () => {
         if (this.props.onRequestAnalyse) {
             this.props.onRequestAnalyse();
@@ -42,8 +47,21 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, AnalyseGrap
 
             this.setState({
                 ...state,
-                result: state.result
+                result: result
             });
+        }
+    }
+
+    private handleClick = (data, index) => {
+        const apl = data.activePayload;
+        if (apl && apl[0]) {
+            const pl = apl[0];
+            if (pl && pl.payload) {
+                const { onPlyClick } = this.props;
+                if (onPlyClick) {
+                    onPlyClick(pl.payload.ply);
+                }
+            }
         }
     }
 
@@ -62,11 +80,11 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, AnalyseGrap
             } else if (result.state == "ready") {
                 return (
                     <ResponsiveContainer width="100%" height={400}>
-                        <AreaChart data={result.analysis} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                        <AreaChart data={result.analysis} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
                             <XAxis dataKey="move" hide={true} />
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
-                            <Tooltip formatter={this.anTooltipValFmt} />
+                            <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
                             <Area type="monotone" dataKey="advantage" name="Advantage" stroke="#8884d8" fill="#8884d8" />
                         </AreaChart>
                     </ResponsiveContainer>
