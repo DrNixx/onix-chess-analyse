@@ -66,12 +66,12 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, AnalyseGrap
     }
 
     render() {
-        const { result } = this.props;
+        const { result } = this.state;
 
         if (result && (result.state != "empty")) {
             if (result.state == "unanalysed") {
                 return (
-                    <span><SafeAnchor href="#" onClick={this.requestAnalysis}>Запросить анализ...</SafeAnchor></span>
+                    <span><SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>Запросить анализ...</SafeAnchor></span>
                 );
             } else if (result.state == "inprogress") {
                 return (
