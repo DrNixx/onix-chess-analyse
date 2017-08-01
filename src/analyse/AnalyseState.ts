@@ -2,5 +2,9 @@ import { AnalysisItem } from "./AnalysisItem";
 
 export interface AnalyseState {
     state: string,
-    analysis: AnalysisItem[]
+    evals: AnalysisItem[]
+}
+
+export interface AnalyseRelatedState {
+    analysis: AnalyseState,
 }

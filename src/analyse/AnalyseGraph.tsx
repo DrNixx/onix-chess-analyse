@@ -51,19 +51,19 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         const { store } = this.props;
         const state = store.getState();
 
-        if (state.state != "empty") {
-            if (state.state == "unanalysed") {
+        if (state.analysis.state != "empty") {
+            if (state.analysis.state == "unanalysed") {
                 return (
                     <span><SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>Запросить анализ...</SafeAnchor></span>
                 );
-            } else if (state.state == "inprogress") {
+            } else if (state.analysis.state == "inprogress") {
                 return (
                     <span>Партия анализируется... Обновите страницу через несколько минут.</span>
                 );
-            } else if (state.state == "ready") {
+            } else if (state.analysis.state == "ready") {
                 return (
                     <ResponsiveContainer width="100%" height={400}>
-                        <AreaChart data={state.analysis} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
+                        <AreaChart data={state.analysis.evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
                             <XAxis dataKey="move" hide={true} />
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />

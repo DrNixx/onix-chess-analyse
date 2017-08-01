@@ -1,10 +1,10 @@
 import { Store } from 'redux';
 import { Observable } from 'rxjs';
 import * as analyseActions from './AnalyseActionConsts';
-import { AnalyseState } from "./AnalyseState";
+import { AnalyseRelatedState } from "./AnalyseState";
 import { AnalyseAction } from "./AnalyseActions";
 
-export type AnalyseStore = Store<AnalyseState>;
+export type AnalyseStore = Store<AnalyseRelatedState>;
 
 export const gameLoadAnalysis = (store: AnalyseStore, id: number) => {
     Observable.ajax({ 

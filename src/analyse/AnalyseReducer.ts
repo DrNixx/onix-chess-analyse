@@ -1,16 +1,18 @@
 import { Reducer } from 'redux';
-import { AnalyseState } from "./AnalyseState";
+import { AnalyseRelatedState } from "./AnalyseState";
 import { AnalyseAction } from "./AnalyseActions";
 import * as actions from './AnalyseActionConsts';
 import { AnalysisResult } from "./AnalysisResult";
 
-const INITIAL_STATE: AnalyseState = {
-    state: "empty",
-    analysis: []
+const INITIAL_STATE: AnalyseRelatedState = {
+    analysis : {
+        state: "empty",
+        evals: []
+    }
 }
 
 
-export const analyseReducer: Reducer<AnalyseState> = (state: AnalyseState = INITIAL_STATE, action: AnalyseAction) => {
+export const analyseReducer: Reducer<AnalyseRelatedState> = (state: AnalyseRelatedState = INITIAL_STATE, action: AnalyseAction) => {
     switch (action.type) {
         case actions.LOAD_ANALYSIS:
             let result = action.analysis;
@@ -19,15 +21,20 @@ export const analyseReducer: Reducer<AnalyseState> = (state: AnalyseState = INIT
             
             return {
                 ...state,
-                state: analysis.state,
-                analysis: analysis.analysis
+                analysis: {
+                    state: analysis.state,
+                    evals: analysis.analysis
+                }
+                
             };
 
         case actions.REQUEST_ANALYSIS:
             return {
                 ...state,
-                state: "inprogress",
-                analysis: []
+                analysis : {
+                    state: "inprogress",
+                    evals: []
+                }
             };
         default:
             return state;

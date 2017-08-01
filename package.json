@@ -1,8 +1,9 @@
 {
   "name": "onix-chess-analyse",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "Chess game analyser",
   "main": "built/index.js",
+  "types": "built/index.d.ts",
   "scripts": {
     "build": "tsc && webpack",
     "webpack": "webpack",
