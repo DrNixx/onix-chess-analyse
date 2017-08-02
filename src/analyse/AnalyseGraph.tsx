@@ -54,11 +54,13 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         if (state.analysis.state != "empty") {
             if (state.analysis.state == "unanalysed") {
                 return (
-                    <span><SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>Запросить анализ...</SafeAnchor></span>
+                    <span className="analysis-request">
+                        <SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>Запросить анализ...</SafeAnchor>
+                    </span>
                 );
             } else if (state.analysis.state == "inprogress") {
                 return (
-                    <span>Партия анализируется... Обновите страницу через несколько минут.</span>
+                    <span className="analysis-inprogress">Партия анализируется... Обновите страницу через несколько минут.</span>
                 );
             } else if (state.analysis.state == "ready") {
                 return (
@@ -76,7 +78,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         }
         
         return (
-            <span>Загрузка...</span>
+            <span className="analysis-loading">Загрузка...</span>
         );
     }
 }
