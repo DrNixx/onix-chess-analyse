@@ -12,7 +12,6 @@ const INITIAL_STATE: AnalyseState = {
 
 
 export const analyseReducer: Reducer<AnalyseState> = (state: AnalyseState = INITIAL_STATE, action: AnalyseAction) => {
-    Logger.debug('Try analysis action', action);
     switch (action.type) {
         case actions.LOAD_ANALYSIS:
             let result = action.analysis;

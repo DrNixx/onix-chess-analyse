@@ -1,7 +1,7 @@
 import { Store } from 'redux';
 import { Observable } from 'rxjs';
-import * as analyseActions from './AnalyseActionConsts';
 import { AnalyseRelatedState } from "./AnalyseState";
+import * as analyseActions from './AnalyseActionConsts';
 import { AnalyseAction } from "./AnalyseActions";
 
 export type AnalyseStore = Store<AnalyseRelatedState>;

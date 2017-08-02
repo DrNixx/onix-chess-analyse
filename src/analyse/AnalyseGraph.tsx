@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Logger } from 'onix-core';
 import { Unsubscribe } from 'redux';
 import { SafeAnchor } from 'onix-ui'
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
 import { AnalysisResult } from './AnalysisResult';
 import { AnalyseStore, gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
+import * as analyseActions from './AnalyseActionConsts';
+import { AnalysePositionAction } from "./AnalyseActions";
 
 export interface AnalyseGraphProps {
     id: number,
@@ -59,10 +60,8 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         if (apl && apl[0]) {
             const pl = apl[0];
             if (pl && pl.payload) {
-                const { onPositionDotClick } = this.props;
-                if (onPositionDotClick) {
-                    onPositionDotClick(pl.payload.ply);
-                }
+                const { store } = this.props;
+                store.dispatch({ type: analyseActions.ANALYSE_POSITION, ply: pl.payload.ply } as AnalysePositionAction);
             }
         }
     }
@@ -70,8 +69,6 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
     render() {
         const { store } = this.props;
         const state = store.getState();
-
-        Logger.debug('AnalyseGraph render', state);
 
         if (state.analysis.status != "empty") {
             if (state.analysis.status == "unanalysed") {
