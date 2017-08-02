@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { Unsubscribe } from 'redux';
 import { SafeAnchor } from 'onix-ui'
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
 import { AnalysisResult } from './AnalysisResult';
-import { AnalyseStore, gameRequestAnalysis } from './AnalyseStore';
+import { AnalyseStore, gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 
 export interface AnalyseGraphProps {
     id: number,
@@ -11,8 +12,26 @@ export interface AnalyseGraphProps {
 }
 
 export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
+    private storeUnsubscribe: Unsubscribe;
+
     constructor(props: AnalyseGraphProps) {
         super(props);
+    }
+
+    componentDidMount() {
+        const { store, id } = this.props;
+        this.storeUnsubscribe = store.subscribe(() => {
+            this.forceUpdate();
+        });
+
+        const state = store.getState();
+        if (!state.analysis || state.analysis.state === "empty") {
+            gameLoadAnalysis(store, id);
+        }
+    }
+
+    componentWillUnmount() {
+        this.storeUnsubscribe();
     }
 
     private anTooltipValFmt = (...params) => {
