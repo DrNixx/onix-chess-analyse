@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Logger } from 'onix-core';
 import { Unsubscribe } from 'redux';
 import { SafeAnchor } from 'onix-ui'
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
@@ -25,7 +26,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         });
 
         const state = store.getState();
-        if ((!state.analysis || state.analysis.state === "empty") && id) {
+        if ((!state.analysis || state.analysis.status === "empty") && id) {
             gameLoadAnalysis(store, id);
         }
     }
@@ -70,18 +71,20 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         const { store } = this.props;
         const state = store.getState();
 
-        if (state.analysis.state != "empty") {
-            if (state.analysis.state == "unanalysed") {
+        Logger.debug('AnalyseGraph render', state);
+
+        if (state.analysis.status != "empty") {
+            if (state.analysis.status == "unanalysed") {
                 return (
                     <span className="analysis-request">
                         <SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>Запросить анализ...</SafeAnchor>
                     </span>
                 );
-            } else if (state.analysis.state == "inprogress") {
+            } else if (state.analysis.status == "inprogress") {
                 return (
                     <span className="analysis-inprogress">Партия анализируется... Обновите страницу через несколько минут.</span>
                 );
-            } else if (state.analysis.state == "ready") {
+            } else if (state.analysis.status == "ready") {
                 return (
                     <ResponsiveContainer width="100%" height={400}>
                         <AreaChart data={state.analysis.evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>

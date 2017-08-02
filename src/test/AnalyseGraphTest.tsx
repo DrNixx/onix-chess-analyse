@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createStore as reduxCreateStore } from 'redux';
+import { createStore as reduxCreateStore, combineReducers } from 'redux';
 import { AnalyseGraph } from '../analyse/AnalyseGraph';
 import { AnalysisResult } from "../analyse/AnalysisResult";
 import { AnalyseRelatedState } from "../analyse/AnalyseState";
@@ -12,11 +12,16 @@ export const AnalyseGraphTest = (container: HTMLElement) => {
     const result = new AnalysisResult(props);
     const preloadedState: AnalyseRelatedState = {
         analysis: {
-            state: result.state,
+            status: result.state,
             evals: result.analysis
         }
     }
 
-    const store = reduxCreateStore(analyseReducer, preloadedState);    
+    const store = reduxCreateStore(
+        combineReducers<AnalyseRelatedState>({
+            analysis: analyseReducer
+        }), preloadedState);
+
+    
     ReactDOM.render(React.createElement(AnalyseGraph, { id: 0, store: store }), container, () => { });
 };

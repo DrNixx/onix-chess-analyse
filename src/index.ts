@@ -8,7 +8,7 @@ export { AnalysisGlyph } from './analyse/AnalysisGlyph';
 export { AnalysisItem } from './analyse/AnalysisItem';
 export { AnalysisJudgment } from './analyse/AnalysisJudgment';
 
-export { AnalyseState, AnalyseRelatedState } from './analyse/AnalyseState';
+export { AnalyseState } from './analyse/AnalyseState';
 export { AnalyseStore, gameLoadAnalysis, gameRequestAnalysis } from './analyse/AnalyseStore';
 export { analyseReducer } from './analyse/AnalyseReducer';
 

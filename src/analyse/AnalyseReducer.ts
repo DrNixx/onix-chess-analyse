@@ -1,18 +1,18 @@
 import { Reducer } from 'redux';
-import { AnalyseRelatedState } from "./AnalyseState";
+import { Logger } from 'onix-core';
+import { AnalyseState } from "./AnalyseState";
 import { AnalyseAction } from "./AnalyseActions";
 import * as actions from './AnalyseActionConsts';
 import { AnalysisResult } from "./AnalysisResult";
 
-const INITIAL_STATE: AnalyseRelatedState = {
-    analysis : {
-        state: "empty",
-        evals: []
-    }
+const INITIAL_STATE: AnalyseState = {
+    status: "empty",
+    evals: []
 }
 
 
-export const analyseReducer: Reducer<AnalyseRelatedState> = (state: AnalyseRelatedState = INITIAL_STATE, action: AnalyseAction) => {
+export const analyseReducer: Reducer<AnalyseState> = (state: AnalyseState = INITIAL_STATE, action: AnalyseAction) => {
+    Logger.debug('Try analysis action', action);
     switch (action.type) {
         case actions.LOAD_ANALYSIS:
             let result = action.analysis;
@@ -21,20 +21,15 @@ export const analyseReducer: Reducer<AnalyseRelatedState> = (state: AnalyseRelat
             
             return {
                 ...state,
-                analysis: {
-                    state: analysis.state,
-                    evals: analysis.analysis
-                }
-                
+                status: analysis.state,
+                evals: analysis.analysis
             };
 
         case actions.REQUEST_ANALYSIS:
             return {
                 ...state,
-                analysis : {
-                    state: "inprogress",
-                    evals: []
-                }
+                status: "inprogress",
+                evals: []
             };
         default:
             return state;
