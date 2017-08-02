@@ -25,7 +25,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         });
 
         const state = store.getState();
-        if (!state.analysis || state.analysis.state === "empty") {
+        if ((!state.analysis || state.analysis.state === "empty") && id) {
             gameLoadAnalysis(store, id);
         }
     }
