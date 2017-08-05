@@ -22,6 +22,12 @@ export class AnalysisResult {
                     this.analysis[i].normalize(prev);
                     prev = this.analysis[i].eval;
                 }
+
+                let next: number|null = null;
+                for (let i = this.analysis.length - 1; i >= 0; i--) {
+                    this.analysis[i].advise(next);
+                    next = this.analysis[i].advantage;
+                }
             }
         }
     }

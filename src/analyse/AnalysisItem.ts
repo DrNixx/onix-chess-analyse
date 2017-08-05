@@ -12,8 +12,6 @@ export class AnalysisItem {
 
     public advantage?: number;
 
-    public evalPawn?: number;
-
     public mate?: number;
     
     public best?: string;
@@ -63,18 +61,25 @@ export class AnalysisItem {
             this.ceil = -1000;
         }
 
-        this.evalPawn = this.eval / 100;
-        this.advantage = this.ceil / 100;
+        this.turn = intVal(1 + (this.ply - 1) / 2);
+        const color = this.ply % 2 == 1;
+        this.name = "" + this.turn + (color ? ". " : "... ") + this.move;
+    }
+
+    public advise(next: number|null) {
+        if (next === null) {
+            this.advantage = this.ceil / 100;
+        } else {
+            this.advantage = next;
+        }
+
         this.desc = "";
+
         if (this.mate) {
             this.desc = "Mate in #" + this.mate;
         } else {
             this.desc = (this.advantage > 0) ? "+" : "";
             this.desc += this.advantage;
         }
-
-        this.turn = intVal(1 + (this.ply - 1) / 2);
-        const color = this.ply % 2 == 1;
-        this.name = "" + this.turn + (color ? ". " : "... ") + this.move;
     }
 }
