@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Unsubscribe } from 'redux';
 import { SafeAnchor } from 'onix-ui'
-import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid } from 'recharts';
+import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { AnalysisResult } from './AnalysisResult';
 import { AnalyseStore, gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 import * as analyseActions from './AnalyseActionConsts';
@@ -10,6 +10,7 @@ import { AnalysePositionAction } from "./AnalyseActions";
 export interface AnalyseGraphProps {
     id: number,
     store: AnalyseStore,
+    currentPly?: number,
     onPositionDotClick?: (ply: number) => void
 }
 
@@ -67,7 +68,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
     }
 
     render() {
-        const { store } = this.props;
+        const { store, currentPly } = this.props;
         const state = store.getState();
 
         if (state.analysis.status != "empty") {
@@ -85,11 +86,13 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
                 return (
                     <ResponsiveContainer width="100%" height={400}>
                         <AreaChart data={state.analysis.evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
-                            <XAxis dataKey="move" hide={true} />
+                            <XAxis dataKey="ply" hide={true} />
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
                             <Area type="monotone" dataKey="advantage" name="Advantage" stroke="#8884d8" fill="#8884d8" />
+                            { currentPly ? (<ReferenceLine x={currentPly} stroke="green" />) : null }
+                            
                         </AreaChart>
                     </ResponsiveContainer>
                 );
