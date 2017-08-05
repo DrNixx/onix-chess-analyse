@@ -17,16 +17,17 @@ export class AnalysisResult {
                     this.analysis[i] = item;
                 }
 
+                const len = this.analysis.length;
                 let prev = 0;
-                for (let i = 0; i < this.analysis.length; i++) {
+                for (let i = 0; i < len; i++) {
                     this.analysis[i].normalize(prev);
                     prev = this.analysis[i].eval;
                 }
 
-                let next: number|null = null;
-                for (let i = this.analysis.length - 1; i >= 0; i--) {
-                    this.analysis[i].advise(next);
-                    next = this.analysis[i].advantage;
+                for (let i = 0; i < len; i++) {
+                    if (i < len - 1) {
+                        this.analysis[i].extend(this.analysis[i + 1]);
+                    }
                 }
             }
         }

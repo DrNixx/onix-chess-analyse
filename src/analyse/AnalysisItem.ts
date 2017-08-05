@@ -6,10 +6,24 @@ export class AnalysisItem {
 
     public move: string;
 
+    /**
+     * Position eval before move (centipawn)
+     */
     public eval?: number;
 
+    /**
+     * Ceiled position eval before move (centipawn)
+     */
     public ceil?: number;
 
+    /**
+     * Ceiled position eval before move (pawn)
+     */
+    public ceilPawn?: number;
+
+    /**
+     * Position eval after move
+     */
     public advantage?: number;
 
     public mate?: number;
@@ -61,16 +75,17 @@ export class AnalysisItem {
             this.ceil = -1000;
         }
 
+        this.ceilPawn = this.ceil / 100;
+        this.advantage = this.ceilPawn;
+
         this.turn = intVal(1 + (this.ply - 1) / 2);
         const color = this.ply % 2 == 1;
         this.name = "" + this.turn + (color ? ". " : "... ") + this.move;
     }
 
-    public advise(next: number|null) {
-        if (next === null) {
-            this.advantage = this.ceil / 100;
-        } else {
-            this.advantage = next;
+    public extend(next: AnalysisItem|null) {
+        if (next !== null) {
+            this.advantage = next.ceilPawn; 
         }
 
         this.desc = "";
