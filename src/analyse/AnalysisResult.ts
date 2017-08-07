@@ -1,4 +1,5 @@
-import { AnalysisItem } from "./AnalysisItem";
+import { AnalysisItem } from './AnalysisItem';
+import { registerStrings } from '../Intl';
 
 export class AnalysisResult {
     public state: string = "empty";
@@ -6,6 +7,8 @@ export class AnalysisResult {
     public analysis: AnalysisItem[] = [];
 
     public constructor(raw) {
+        registerStrings();
+        
         if (raw) {
             if (raw.state) {
                 this.state = raw.state;

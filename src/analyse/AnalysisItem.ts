@@ -1,4 +1,4 @@
-import { intVal } from 'onix-core';
+import { intVal, sprintf, Intl } from 'onix-core';
 import { AnalysisJudgment } from "./AnalysisJudgment";
 
 export class AnalysisItem {
@@ -50,7 +50,15 @@ export class AnalysisItem {
         this.ply = raw.ply;
         this.move = raw.move;
         this.eval = raw.eval;
+        if (!this.eval && (this.eval !== 0)) {
+            this.eval = null;
+        }
+        
         this.mate = raw.mate;
+        if (!this.mate && (this.mate !== 0)) {
+            this.mate = null;
+        }
+
         this.best = raw.best;
         this.variation = raw.variation;
         this.depth = raw.depth;
@@ -62,7 +70,7 @@ export class AnalysisItem {
     }
 
     public normalize(prev: number) {
-        if (!this.eval && (this.eval !== 0)) {
+        if (this.eval === null) {
             this.eval = prev;
         }
 
@@ -90,8 +98,11 @@ export class AnalysisItem {
 
         this.desc = "";
 
-        if (this.mate) {
-            this.desc = "Mate in #" + this.mate;
+        if (this.mate !== null) {
+            if (this.mate !== 0) {
+                const fmt = Intl.t("analyse", "mateIn");
+                this.desc = sprintf(fmt, this.mate);
+            }
         } else {
             this.desc = (this.advantage > 0) ? "+" : "";
             this.desc += this.advantage;

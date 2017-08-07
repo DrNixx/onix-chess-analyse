@@ -12,4 +12,6 @@ export { AnalyseState } from './analyse/AnalyseState';
 export { AnalyseStore, gameLoadAnalysis, gameRequestAnalysis } from './analyse/AnalyseStore';
 export { analyseReducer } from './analyse/AnalyseReducer';
 
+export { registerStrings } from './Intl';
+
 export { AnalyseActionTypes, AnalyseActionConsts, AnalyseActions };
