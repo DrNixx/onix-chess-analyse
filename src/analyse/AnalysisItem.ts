@@ -62,7 +62,7 @@ export class AnalysisItem {
     }
 
     public normalize(prev: number) {
-        if (!this.eval) {
+        if (!this.eval && (this.eval !== 0)) {
             this.eval = prev;
         }
 
