@@ -1,6 +1,6 @@
-# Chess game [![npm][npm-badge]][npm]
+# Chess analysis [![npm][npm-badge]][npm]
 
-Chess game board
+Chess game analysis graph
 
 ## Copyright & License
 
@@ -8,5 +8,5 @@ Chess game board
 
 [MIT License](/LICENSE)
 
-[npm-badge]: https://badge.fury.io/js/onix-chess-game.svg
-[npm]: https://badge.fury.io/js/onix-chess-game
+[npm-badge]: https://badge.fury.io/js/onix-chess-analyse.svg
+[npm]: https://badge.fury.io/js/onix-chess-analyse
