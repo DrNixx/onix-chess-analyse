@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/DrNixx/onix-chess-analyse#readme",
   "dependencies": {
-    "onix-core": "^1.1.24",
+    "onix-core": "^1.1.25",
     "onix-ui": "^1.0.24",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -37,7 +37,7 @@
     "rxjs": "^5.4.2"
   },
   "devDependencies": {
-    "@types/node": "^8.0.19",
+    "@types/node": "^8.0.20",
     "@types/react": "^15.6.1",
     "awesome-typescript-loader": "^3.2.2",
     "source-map-loader": "^0.2.1",
