@@ -94,7 +94,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
-                            <Area type="monotone" dataKey="advantage" baseLine={0} name={IntlCore.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
+                            <Area type="monotone" dataKey="advantage" name={IntlCore.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
                             { currentPly ? (<ReferenceLine x={currentPly} stroke="green" />) : null }
                             
                         </AreaChart>
