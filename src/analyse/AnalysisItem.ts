@@ -1,4 +1,4 @@
-import { intVal, sprintf, Intl } from 'onix-core';
+import { intVal, sprintf, Intl as IntlCore } from 'onix-core';
 import { AnalysisJudgment } from "./AnalysisJudgment";
 
 export class AnalysisItem {
@@ -100,7 +100,7 @@ export class AnalysisItem {
 
         if (this.mate !== null) {
             if (this.mate !== 0) {
-                const fmt = Intl.t("analyse", "mateIn");
+                const fmt = IntlCore.t("analyse", "mateIn");
                 this.desc = sprintf(fmt, this.mate);
             }
         } else {

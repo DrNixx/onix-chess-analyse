@@ -1,6 +1,6 @@
 import { intVal } from 'onix-core';
 import { AnalysisItem } from './AnalysisItem';
-import { registerStrings } from '../Intl';
+import { Intl } from '../Intl';
 import { IUserAnalysis } from './IUserAnalysis';
 
 export class AnalysisResult {
@@ -21,7 +21,7 @@ export class AnalysisResult {
     public analysis: AnalysisItem[] = [];
 
     public constructor(raw) {
-        registerStrings();
+        Intl.register();
         
         if (raw) {
             if (raw.state) {

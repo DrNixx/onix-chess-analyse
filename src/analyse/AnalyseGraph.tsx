@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Unsubscribe } from 'redux';
-import { Intl } from 'onix-core';
+import { Intl as IntlCore } from 'onix-core';
 import { SafeAnchor } from 'onix-ui'
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { AnalysisResult } from './AnalysisResult';
 import { AnalyseStore, gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 import * as analyseActions from './AnalyseActionConsts';
 import { AnalysePositionAction } from "./AnalyseActions";
-import { registerStrings } from '../Intl';
+import { Intl } from '../Intl';
 
 export interface AnalyseGraphProps {
     id: number,
@@ -22,7 +22,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
     constructor(props: AnalyseGraphProps) {
         super(props);
 
-        registerStrings();
+        Intl.register();
     }
 
     componentDidMount() {
@@ -79,12 +79,12 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
             if (state.analysis.status == "unanalysed") {
                 return (
                     <span className="analysis-request">
-                        <SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>{Intl.t("analyse", "request")}</SafeAnchor>
+                        <SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>{IntlCore.t("analyse", "request")}</SafeAnchor>
                     </span>
                 );
             } else if (state.analysis.status == "inprogress") {
                 return (
-                    <span className="analysis-inprogress">{Intl.t("analyse", "inprogress")}</span>
+                    <span className="analysis-inprogress">{IntlCore.t("analyse", "inprogress")}</span>
                 );
             } else if (state.analysis.status == "ready") {
                 return (
@@ -94,7 +94,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
-                            <Area type="monotone" dataKey="advantage" name={Intl.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
+                            <Area type="monotone" dataKey="advantage" name={IntlCore.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
                             { currentPly ? (<ReferenceLine x={currentPly} stroke="green" />) : null }
                             
                         </AreaChart>
@@ -104,7 +104,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         }
         
         return (
-            <span className="analysis-loading">{Intl.t("analyse", "loading")}</span>
+            <span className="analysis-loading">{IntlCore.t("analyse", "loading")}</span>
         );
     }
 }
