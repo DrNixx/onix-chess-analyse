@@ -14,6 +14,10 @@ export class Intl {
                     request: "Запросить анализ...",
                     inprogress: "Партия анализируется... Обновите страницу через несколько минут.",
                     loading: "Загрузка...",
+                    averageCentipawnLoss: "В среднем потеряно сотых пешки",
+                    inaccuracies: "Сомнительные ходы",
+                    mistakes: "Ошибки",
+                    blunders: "Грубые ошибки",
                 },
 
                 'en-us': {
@@ -22,6 +26,10 @@ export class Intl {
                     mateIn: "Mate in #%d",
                     request: "Request analysis...",
                     loading: "Loading...",
+                    averageCentipawnLoss: "Average centipawn loss",
+                    inaccuracies: "Inaccuracies",
+                    mistakes: "Mistakes",
+                    blunders: "Blunders",
                 }
             });
 

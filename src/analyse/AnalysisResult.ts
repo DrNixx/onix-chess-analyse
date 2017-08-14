@@ -10,12 +10,14 @@ export class AnalysisResult {
                     blunder: 0,
                     mistake: 0,
                     inaccuracy: 0,
+                    acpl: 0,
                 };
 
     public black: IUserAnalysis = {
                     blunder: 0,
                     mistake: 0,
                     inaccuracy: 0,
+                    acpl: 0,
                 };
 
     public analysis: AnalysisItem[] = [];
@@ -33,6 +35,7 @@ export class AnalysisResult {
                     blunder: intVal(raw.white.blunder),
                     mistake: intVal(raw.white.mistake),
                     inaccuracy: intVal(raw.white.inaccuracy),
+                    acpl: intVal(raw.white.acpl)
                 }
             }
 
@@ -41,6 +44,7 @@ export class AnalysisResult {
                     blunder: intVal(raw.black.blunder),
                     mistake: intVal(raw.black.mistake),
                     inaccuracy: intVal(raw.black.inaccuracy),
+                    acpl: intVal(raw.black.acpl)
                 }
             }
 

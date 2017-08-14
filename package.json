@@ -1,6 +1,6 @@
 {
   "name": "onix-chess-analyse",
-  "version": "1.1.12",
+  "version": "1.1.14",
   "description": "Chess game analyser",
   "main": "built/index.js",
   "types": "built/index.d.ts",
@@ -32,7 +32,7 @@
     "onix-ui": "^1.0.31",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "recharts": "^1.0.0-alpha.2",
+    "recharts": "^1.0.0-alpha.3",
     "redux": "^3.7.2",
     "rxjs": "^5.4.3",
     "warning": "^3.0.0"

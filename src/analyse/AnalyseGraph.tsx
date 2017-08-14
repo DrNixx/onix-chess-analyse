@@ -12,11 +12,26 @@ import { Intl } from '../Intl';
 export interface AnalyseGraphProps {
     id: number,
     store: AnalyseStore,
+    height?: number,
+    colorWhite?: string,
+    colorBlack?: string,
+    startPly?: number,
     currentPly?: number,
     onPositionDotClick?: (ply: number) => void
 }
 
 export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
+    public static defaultProps: AnalyseGraphProps = {
+        id: 0,
+        store: null,
+        height: 400,
+        colorWhite: "#f0d9b5",
+        colorBlack: "#b58863",
+        startPly: 0,
+        currentPly: 0,
+        onPositionDotClick: (ply) => { }
+    }    
+
     private storeUnsubscribe: Unsubscribe;
 
     constructor(props: AnalyseGraphProps) {
@@ -72,33 +87,55 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
     }
 
     render() {
-        const { store, currentPly } = this.props;
+        const { store, currentPly, colorWhite, colorBlack, height } = this.props;
         const state = store.getState();
+        const { status, white, black, evals} = state.analysis;
 
-        if (state.analysis.status != "empty") {
-            if (state.analysis.status == "unanalysed") {
+        if (status != "empty") {
+            if (status == "unanalysed") {
                 return (
                     <span className="analysis-request">
                         <SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>{IntlCore.t("analyse", "request")}</SafeAnchor>
                     </span>
                 );
-            } else if (state.analysis.status == "inprogress") {
+            } else if (status == "inprogress") {
                 return (
                     <span className="analysis-inprogress">{IntlCore.t("analyse", "inprogress")}</span>
                 );
-            } else if (state.analysis.status == "ready") {
+            } else if (status == "ready") {
                 return (
-                    <ResponsiveContainer width="100%" height={400}>
-                        <AreaChart data={state.analysis.evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
-                            <XAxis dataKey="ply" hide={true} />
-                            <YAxis />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
-                            <Area type="monotone" dataKey="advantage" name={IntlCore.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
-                            { currentPly ? (<ReferenceLine x={currentPly} stroke="green" />) : null }
-                            
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    <div className="analyse">
+                        <div className="graph-container">
+                            <ResponsiveContainer width="100%" height={height}>
+                                <AreaChart data={evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
+                                    <XAxis dataKey="ply" hide={true} />
+                                    <YAxis />
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
+                                    <Area type="monotone" dataKey="advantage" name={IntlCore.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
+                                    { currentPly ? (<ReferenceLine x={currentPly} stroke="green" />) : null }
+                                    
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        </div>
+                        <div className="graph-info">
+                            <div className="row">
+                                <div className="col-xs-6 col-sm-6 col-md-12 col-lg-12 white" style={{ backgroundColor: colorWhite}}>
+                                    <span>{IntlCore.t("analyse", "inaccuracies")}:<span>{white.inaccuracy}</span></span>
+                                    <span>{IntlCore.t("analyse", "mistakes")}:<span>{white.mistake}</span></span>
+                                    <span>{IntlCore.t("analyse", "blunders")}:<span>{white.blunder}</span></span>
+                                    <span>{IntlCore.t("analyse", "averageCentipawnLoss")}:<span>{white.acpl}</span></span>
+                                </div>
+                                <div className="col-xs-6 col-sm-6 col-md-12 col-lg-12 black" style={{ backgroundColor: colorBlack}}>
+                                    <span>{IntlCore.t("analyse", "inaccuracies")}:<span>{black.inaccuracy}</span></span>
+                                    <span>{IntlCore.t("analyse", "mistakes")}:<span>{black.mistake}</span></span>
+                                    <span>{IntlCore.t("analyse", "blunders")}:<span>{black.blunder}</span></span>
+                                    <span>{IntlCore.t("analyse", "averageCentipawnLoss")}:<span>{black.acpl}</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 );
             }
         }

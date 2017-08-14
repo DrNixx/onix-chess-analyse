@@ -6,6 +6,46 @@
         <title>Position setup test</title>
         <link href="assets/css/bootstrap.css" rel="stylesheet" />
         <link href="assets/css/chess.css" rel="stylesheet" />
+        <style>
+            .analyse {
+  width: 100%; }
+  .analyse .graph-container {
+    width: calc(100% - 255px);
+    display: inline-block; }
+  .analyse .graph-info {
+    width: 250px;
+    height: 100%;
+    display: inline-block; }
+  .analyse .white {
+    color: #000; }
+  .analyse .black {
+    color: #fff; }
+  .analyse .white, .analyse .black {
+    height: 200px;
+    padding-top: 10px;
+    text-align: right;
+     }
+    .analyse .white > span, .analyse .black > span {
+      display: block;
+      margin: 0 auto;
+      width: 100%; }
+      .analyse .white > span span, .analyse .black > span span {
+        display: inline-block;
+        vertical-align: middle;
+        font-weight: bold;
+        min-width: 2em;
+         }
+
+@media (max-width: 991px) {
+  .analyse .graph-container {
+    width: 100%;
+    display: block; }
+  .analyse .graph-info {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: .5em; } }
+        </style>
     </head>
     <body>
         <div class="page-container row-fluid">
