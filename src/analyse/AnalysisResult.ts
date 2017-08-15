@@ -40,7 +40,7 @@ export class AnalysisResult {
             }
 
             if (raw.black) {
-                this.white = {
+                this.black = {
                     blunder: intVal(raw.black.blunder),
                     mistake: intVal(raw.black.mistake),
                     inaccuracy: intVal(raw.black.inaccuracy),
