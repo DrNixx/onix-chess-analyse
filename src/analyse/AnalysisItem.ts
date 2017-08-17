@@ -1,4 +1,5 @@
-import { intVal, sprintf, Intl as IntlCore } from 'onix-core';
+import toSafeInteger = require('lodash/toSafeInteger');
+import { sprintf, Intl as IntlCore } from 'onix-core';
 import { AnalysisJudgment } from "./AnalysisJudgment";
 
 export class AnalysisItem {
@@ -86,7 +87,7 @@ export class AnalysisItem {
         this.ceilPawn = this.ceil / 100;
         this.advantage = this.ceilPawn;
 
-        this.turn = intVal(1 + (this.ply - 1) / 2);
+        this.turn = toSafeInteger(1 + (this.ply - 1) / 2);
         const color = this.ply % 2 == 1;
         this.name = "" + this.turn + (color ? ". " : "... ") + this.move;
     }

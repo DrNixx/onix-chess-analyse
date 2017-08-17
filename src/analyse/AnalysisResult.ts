@@ -1,4 +1,4 @@
-import { intVal } from 'onix-core';
+import toSafeInteger = require('lodash/toSafeInteger');
 import { AnalysisItem } from './AnalysisItem';
 import { Intl } from '../Intl';
 import { IUserAnalysis } from './IUserAnalysis';
@@ -32,19 +32,19 @@ export class AnalysisResult {
 
             if (raw.white) {
                 this.white = {
-                    blunder: intVal(raw.white.blunder),
-                    mistake: intVal(raw.white.mistake),
-                    inaccuracy: intVal(raw.white.inaccuracy),
-                    acpl: intVal(raw.white.acpl)
+                    blunder: toSafeInteger(raw.white.blunder),
+                    mistake: toSafeInteger(raw.white.mistake),
+                    inaccuracy: toSafeInteger(raw.white.inaccuracy),
+                    acpl: toSafeInteger(raw.white.acpl)
                 }
             }
 
             if (raw.black) {
                 this.black = {
-                    blunder: intVal(raw.black.blunder),
-                    mistake: intVal(raw.black.mistake),
-                    inaccuracy: intVal(raw.black.inaccuracy),
-                    acpl: intVal(raw.black.acpl)
+                    blunder: toSafeInteger(raw.black.blunder),
+                    mistake: toSafeInteger(raw.black.mistake),
+                    inaccuracy: toSafeInteger(raw.black.inaccuracy),
+                    acpl: toSafeInteger(raw.black.acpl)
                 }
             }
 

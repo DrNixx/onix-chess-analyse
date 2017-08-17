@@ -1,6 +1,6 @@
 {
   "name": "onix-chess-analyse",
-  "version": "1.1.16",
+  "version": "1.2.17",
   "description": "Chess game analyser",
   "main": "built/index.js",
   "types": "built/index.d.ts",
@@ -28,8 +28,9 @@
   },
   "homepage": "https://github.com/DrNixx/onix-chess-analyse#readme",
   "dependencies": {
-    "onix-core": "^1.1.27",
-    "onix-ui": "^1.0.31",
+    "lodash": "^4.17.4",
+    "onix-core": "^1.2.28",
+    "onix-ui": "^1.1.32",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "recharts": "^1.0.0-alpha.3",
@@ -38,7 +39,8 @@
     "warning": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^8.0.22",
+    "@types/lodash": "^4.14.73",
+    "@types/node": "^8.0.24",
     "@types/react": "^15.6.1",
     "awesome-typescript-loader": "^3.2.3",
     "source-map-loader": "^0.2.1",
