@@ -50,7 +50,7 @@ export class AnalysisResult {
 
             if (raw.analysis) {
                 for (let i = 0; i < raw.analysis.length; i++) {
-                    let item = new AnalysisItem(raw.analysis[i]);
+                    let item = new AnalysisItem(raw.analysis[i], i + 1);
                     this.analysis[i] = item;
                 }
 

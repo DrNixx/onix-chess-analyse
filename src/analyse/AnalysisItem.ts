@@ -1,5 +1,6 @@
 import toSafeInteger = require('lodash/toSafeInteger');
 import { sprintf, Intl as IntlCore } from 'onix-core';
+import { Color, Chess as Engine } from 'onix-chess';
 import { AnalysisJudgment } from "./AnalysisJudgment";
 
 export class AnalysisItem {
@@ -47,9 +48,9 @@ export class AnalysisItem {
 
     public desc?: string;
 
-    public constructor(raw?) {
+    public constructor(raw?, ply?: number) {
         if (raw) {
-            this.ply = raw.ply;
+            this.ply = raw.ply || ply || 0;
             this.move = raw.move;
             this.eval = raw.eval;
             if (!this.eval && (this.eval !== 0)) {
@@ -89,9 +90,9 @@ export class AnalysisItem {
         this.ceilPawn = this.ceil / 100;
         this.advantage = this.ceilPawn;
 
-        this.turn = toSafeInteger(1 + (this.ply - 1) / 2);
-        const color = this.ply % 2 == 1;
-        this.name = "" + this.turn + (color ? ". " : "... ") + this.move;
+        this.turn = this.ply ? Engine.plyToTurn(this.ply) : 0;
+        const color = this.ply ? Engine.plyToColor(this.ply) : Color.NoColor;
+        this.name = "" + this.turn + (color === Color.White ? ". " : "... ") + this.move;
     }
 
     public extend(next: AnalysisItem|null) {

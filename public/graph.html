@@ -62,14 +62,400 @@
         <script src="chess-analyse.tests.js"></script>
         <script>
             var props = {
-                board: {
-                    size: 4, 
-                    flip: false
+                "state": "ready",
+                "white": {
+                    "inaccuracy": 1,
+                    "mistake": 4,
+                    "blunder": 0,
+                    "acpl": 27
                 },
-                dialog: true
+                "black": {
+                    "inaccuracy": 7,
+                    "mistake": 2,
+                    "blunder": 2,
+                    "acpl": 53
+                },
+                "analysis": [
+                    {
+                        "eval": 22
+                    },
+                    {
+                        "eval": 36
+                    },
+                    {
+                        "eval": 36
+                    },
+                    {
+                        "eval": 113,
+                        "best": "b8c6",
+                        "variation": "Nc6 Bb5 a6 Bxc6 dxc6 O-O Bg4 d3 Nf6 h3",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Nc6."
+                        }
+                    },
+                    {
+                        "eval": 96
+                    },
+                    {
+                        "eval": 105
+                    },
+                    {
+                        "eval": 113
+                    },
+                    {
+                        "eval": 127
+                    },
+                    {
+                        "eval": 94
+                    },
+                    {
+                        "eval": 86
+                    },
+                    {
+                        "eval": 86
+                    },
+                    {
+                        "eval": 119
+                    },
+                    {
+                        "eval": 84
+                    },
+                    {
+                        "eval": 115
+                    },
+                    {
+                        "eval": 107
+                    },
+                    {
+                        "eval": 155
+                    },
+                    {
+                        "eval": 163
+                    },
+                    {
+                        "eval": 151
+                    },
+                    {
+                        "eval": 165
+                    },
+                    {
+                        "eval": 557,
+                        "best": "d6b4",
+                        "variation": "Bb4 Bd3 Qh5 h3 Bf5 g4 Bxg4 hxg4 Qxg4+ Kh2",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Blunder",
+                                "symbol": "??"
+                            },
+                            "name": "Blunder",
+                            "comment": "Blunder. Best move was Bb4."
+                        }
+                    },
+                    {
+                        "eval": 317,
+                        "best": "f3e5",
+                        "variation": "Nxe5 Bxe5 Rxe5 Bg4 Qe1 Nc6 Bd3 f5 Nd5 Rae8",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Mistake",
+                                "symbol": "?"
+                            },
+                            "name": "Mistake",
+                            "comment": "Mistake. Best move was Nxe5."
+                        }
+                    },
+                    {
+                        "eval": 886,
+                        "best": "d6e5",
+                        "variation": "Bxe5 Nxe5 Qf6 Nd7 Bxd7 Qxd7 Qe5 Qg4 c6 Bf4",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Blunder",
+                                "symbol": "??"
+                            },
+                            "name": "Blunder",
+                            "comment": "Blunder. Best move was Bxe5."
+                        }
+                    },
+                    {
+                        "eval": 886
+                    },
+                    {
+                        "eval": 894
+                    },
+                    {
+                        "eval": 903
+                    },
+                    {
+                        "eval": 1090,
+                        "best": "a8d8",
+                        "variation": "Rad8 Bd3 h6 Rg4 Ng6 Ne4 Qe7 Nxd6 Qxd6 Be3",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Rad8."
+                        }
+                    },
+                    {
+                        "eval": 953
+                    },
+                    {
+                        "eval": 947
+                    },
+                    {
+                        "eval": 854,
+                        "best": "g5g4",
+                        "variation": "Rg4 Qf5 Qd7 Qxd7 Bxd7 Rfd8 Rd1 a6 Kg2 Ng6",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Rg4."
+                        }
+                    },
+                    {
+                        "eval": 955,
+                        "best": "e7g6",
+                        "variation": "Ng6 Qc1 Qd6 a3 c6 Bc4 b5 Bb3 Nf4 Qe3",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Mistake",
+                                "symbol": "?"
+                            },
+                            "name": "Mistake",
+                            "comment": "Mistake. Best move was Ng6."
+                        }
+                    },
+                    {
+                        "eval": 963
+                    },
+                    {
+                        "eval": 967
+                    },
+                    {
+                        "eval": 947
+                    },
+                    {
+                        "eval": 1547,
+                        "best": "a8d8",
+                        "variation": "Rad8 Qc1 Qxc1+ Rxc1 Nd6 Re1 Rfe8 Rxe8+ Nxe8 Kg2",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Rad8."
+                        }
+                    },
+                    {
+                        "eval": 886,
+                        "best": "g4h4",
+                        "variation": "Rh4 Qf6 Nd5 Qd8 Bxh7+ Kh8 Qd3 Rfe8 Bg8+ Qxh4",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Mistake",
+                                "symbol": "?"
+                            },
+                            "name": "Mistake",
+                            "comment": "Mistake. Best move was Rh4."
+                        }
+                    },
+                    {
+                        "eval": 939
+                    },
+                    {
+                        "eval": 921
+                    },
+                    {
+                        "eval": 1028,
+                        "best": "a8e8",
+                        "variation": "Rae8 Rd1 g6 Qg3 Qg7 Rgd4 Re6 Ra4 Rfe8 Rxa7",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Rae8."
+                        }
+                    },
+                    {
+                        "eval": 949
+                    },
+                    {
+                        "eval": 1042
+                    },
+                    {
+                        "eval": 822,
+                        "best": "c3d5",
+                        "variation": "Nd5 Qxb2 Rd1 c6 Nc7 Qf6 Ng5 h5 Rxh5 gxh5",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Mistake",
+                                "symbol": "?"
+                            },
+                            "name": "Mistake",
+                            "comment": "Mistake. Best move was Nd5."
+                        }
+                    },
+                    {
+                        "eval": 834
+                    },
+                    {
+                        "eval": 826
+                    },
+                    {
+                        "eval": 876,
+                        "best": "f6b2",
+                        "variation": "Qxb2 Rf1 h6 Bd5 Qg7 Rhf4 Re7 Nh4 Kh7 Bxb7",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Qxb2."
+                        }
+                    },
+                    {
+                        "eval": 878
+                    },
+                    {
+                        "eval": 977,
+                        "best": "a8d8",
+                        "variation": "Rad8 Qg3 Qd6 Bc2 Re2 Bb3 Rd7 Qxd6 Rxd6 Ng5",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Inaccuracy. Best move was Rad8."
+                        }
+                    },
+                    {
+                        "eval": 1006
+                    },
+                    {
+                        "eval": 1210
+                    },
+                    {
+                        "eval": 1078
+                    },
+                    {
+                        "eval": 1224
+                    },
+                    {
+                        "eval": 1151
+                    },
+                    {
+                        "eval": 1517
+                    },
+                    {
+                        "eval": 1569
+                    },
+                    {
+                        "eval": 1604
+                    },
+                    {
+                        "eval": 1662
+                    },
+                    {
+                        "eval": 1929
+                    },
+                    {
+                        "eval": 1836
+                    },
+                    {
+                        "eval": 1929
+                    },
+                    {
+                        "eval": 872,
+                        "best": "g2g4",
+                        "variation": "Qg4 Qd2+ Kf3 Qxg5 Qxg5 Kxf7 Bxg6+ Ke6 Bf5+ Kf7",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Mistake",
+                                "symbol": "?"
+                            },
+                            "name": "Mistake",
+                            "comment": "Mistake. Best move was Qg4."
+                        }
+                    },
+                    {
+                        "eval": 2288,
+                        "best": "g8f7",
+                        "variation": "Kxf7 Qxg6+ Qxg6 Bxg6+ Kxg6 Kxd1 c5 Ke2 Kf5 h4",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Mistake",
+                                "symbol": "?"
+                            },
+                            "name": "Mistake",
+                            "comment": "Mistake. Best move was Kxf7."
+                        }
+                    },
+                    {
+                        "eval": 1606
+                    },
+                    {
+                        "eval": 1585
+                    },
+                    {
+                        "eval": 1577
+                    },
+                    {
+                        "eval": 1771
+                    },
+                    {
+                        "eval": 1727
+                    },
+                    {
+                        "eval": 2646
+                    },
+                    {
+                        "eval": 2296
+                    },
+                    {
+                        "mate": 4,
+                        "best": "b2b5",
+                        "variation": "Rb5 Nf5 Rxf5 Rxf5 Kg7 Be8 c5 Rf7+ Kg8 h4",
+                        "judgment": {
+                            "glyph": {
+                                "name": "Dubious move",
+                                "symbol": "?!"
+                            },
+                            "name": "Inaccuracy",
+                            "comment": "Checkmate is now unavoidable. Best move was Rb5."
+                        }
+                    },
+                    {
+                        "mate": 3
+                    },
+                    {
+                        "mate": 2
+                    },
+                    {
+                        "mate": 1
+                    },
+                    {
+                        "mate": 1
+                    }
+                ]
             };
             
-            onix.AnalyseGraphTest(document.getElementById("boardHere"));
+            onix.AnalyseGraphTest(document.getElementById("boardHere"), props);
         </script>
     </body>
 </html>

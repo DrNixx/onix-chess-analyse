@@ -29,6 +29,7 @@
   "homepage": "https://github.com/DrNixx/onix-chess-analyse#readme",
   "dependencies": {
     "lodash": "^4.17.4",
+    "onix-chess": "^1.1.14",
     "onix-core": "^1.2.28",
     "onix-ui": "^1.1.32",
     "react": "^15.6.1",
