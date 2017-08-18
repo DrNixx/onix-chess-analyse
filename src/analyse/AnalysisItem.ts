@@ -47,26 +47,28 @@ export class AnalysisItem {
 
     public desc?: string;
 
-    public constructor(raw) {
-        this.ply = raw.ply;
-        this.move = raw.move;
-        this.eval = raw.eval;
-        if (!this.eval && (this.eval !== 0)) {
-            this.eval = null;
-        }
-        
-        this.mate = raw.mate;
-        if (!this.mate && (this.mate !== 0)) {
-            this.mate = null;
-        }
-
-        this.best = raw.best;
-        this.variation = raw.variation;
-        this.depth = raw.depth;
-        this.time = raw.time;
-
-        if (raw.judgment) {
-            this.judgment = new AnalysisJudgment(raw.judgment);
+    public constructor(raw?) {
+        if (raw) {
+            this.ply = raw.ply;
+            this.move = raw.move;
+            this.eval = raw.eval;
+            if (!this.eval && (this.eval !== 0)) {
+                this.eval = null;
+            }
+            
+            this.mate = raw.mate;
+            if (!this.mate && (this.mate !== 0)) {
+                this.mate = null;
+            }
+    
+            this.best = raw.best;
+            this.variation = raw.variation;
+            this.depth = raw.depth;
+            this.time = raw.time;
+    
+            if (raw.judgment) {
+                this.judgment = new AnalysisJudgment(raw.judgment);
+            }
         }
     }
 

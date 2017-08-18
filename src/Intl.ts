@@ -9,6 +9,7 @@ export class Intl {
             IntlCore.registerStrings('analyse', {
                 'ru-ru': {
                     title: "Компьютерный анализ",
+                    startpos: "Начальная позиция",
                     advantage: "Оценка",
                     mateIn: "Мат через %d",
                     request: "Запросить анализ...",
@@ -22,6 +23,7 @@ export class Intl {
 
                 'en-us': {
                     title: "Computer analysis",
+                    startpos: "Start position", 
                     advantage: "Advantage",
                     mateIn: "Mate in #%d",
                     request: "Request analysis...",

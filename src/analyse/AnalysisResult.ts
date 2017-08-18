@@ -54,9 +54,21 @@ export class AnalysisResult {
                     this.analysis[i] = item;
                 }
 
+                let start = new AnalysisItem();
+                start.ply = 0;
+                start.move = "";
+                start.eval = 0;
+                start.mate = null;
+                start.best = "";
+                start.variation = null;
+                start.depth = 0;
+                start.time = 0;
+        
+                this.analysis.unshift(start);
+
                 const len = this.analysis.length;
                 let prev = 0;
-                for (let i = 0; i < len; i++) {
+                for (let i = 1; i < len; i++) {
                     this.analysis[i].normalize(prev);
                     prev = this.analysis[i].eval;
                 }
