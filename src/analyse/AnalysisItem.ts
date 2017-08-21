@@ -75,7 +75,12 @@ export class AnalysisItem {
 
     public normalize(prev: number) {
         if (this.eval === null) {
-            this.eval = prev;
+            if (this.mate !== null) {
+                this.eval = Math.sign(this.mate) * 1000;
+            } else {
+                this.eval = prev;
+            }
+            
         }
 
         this.ceil = this.eval;
