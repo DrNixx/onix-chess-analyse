@@ -21,6 +21,7 @@ export const analyseReducer: Reducer<AnalyseState> = (state: AnalyseState = INIT
             return {
                 ...state,
                 status: analysis.state,
+                completed: analysis.completed,
                 white: analysis.white,
                 black: analysis.black,
                 evals: analysis.analysis

@@ -6,6 +6,8 @@ import { IUserAnalysis } from './IUserAnalysis';
 export class AnalysisResult {
     public state: string = "empty";
 
+    public completed: number = 0;
+
     public white: IUserAnalysis = {
                     blunder: 0,
                     mistake: 0,
@@ -28,6 +30,10 @@ export class AnalysisResult {
         if (raw) {
             if (raw.state) {
                 this.state = raw.state;
+            }
+
+            if ((this.state == "inprogress") && (raw.completed)) {
+                this.completed = toSafeInteger(raw.completed)
             }
 
             if (raw.white) {

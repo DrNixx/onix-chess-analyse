@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Unsubscribe } from 'redux';
-import { Intl as IntlCore } from 'onix-core';
+import { Intl as IntlCore, sprintf } from 'onix-core';
 import { SafeAnchor } from 'onix-ui'
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { AnalysisResult } from './AnalysisResult';
@@ -75,6 +75,11 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         gameRequestAnalysis(store, id);
     }
 
+    private loadAnalysis = () => {
+        const { store, id } = this.props;
+        gameLoadAnalysis(store, id);
+    }
+
     private handleClick = (data, index) => {
         const apl = data.activePayload;
         if (apl && apl[0]) {
@@ -86,32 +91,45 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         }
     }
 
+    renderProgress(progress: number) {
+        const fmt = IntlCore.t("analyse", "completed");
+        const progressStr = sprintf(fmt, process);
+        return (
+            <span className="analysis-inprogress">
+                {IntlCore.t("analyse", "inprogress")}
+                { progress ? <span className="progress">{progressStr}</span> : null }
+            </span>
+        );
+    }
+
     render() {
-        const { store, currentPly, colorWhite, colorBlack, height } = this.props;
+        const that = this;
+        const { store, currentPly, colorWhite, colorBlack, height } = that.props;
         const state = store.getState();
-        const { status, white, black, evals} = state.analysis;
+        const { status, completed, white, black, evals} = state.analysis;
 
         if (status != "empty") {
             if (status == "unanalysed") {
                 return (
                     <span className="analysis-request">
-                        <SafeAnchor className="btn btn-default" href="#" onClick={this.requestAnalysis}>{IntlCore.t("analyse", "request")}</SafeAnchor>
+                        <SafeAnchor className="btn btn-info" href="#" onClick={that.requestAnalysis}>{IntlCore.t("analyse", "request")}</SafeAnchor>
                     </span>
                 );
             } else if (status == "inprogress") {
-                return (
-                    <span className="analysis-inprogress">{IntlCore.t("analyse", "inprogress")}</span>
-                );
+                setTimeout(() => {
+                    that.loadAnalysis();
+                }, 5500);
+                return that.renderProgress(completed);
             } else if (status == "ready") {
                 return (
                     <div className="analyse">
                         <div className="graph-container">
                             <ResponsiveContainer width="100%" height={height}>
-                                <AreaChart data={evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={this.handleClick}>
+                                <AreaChart data={evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={that.handleClick}>
                                     <XAxis dataKey="ply" hide={true} />
                                     <YAxis />
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <Tooltip formatter={this.anTooltipValFmt} labelFormatter={this.anTooltipLblFmt} />
+                                    <Tooltip formatter={that.anTooltipValFmt} labelFormatter={that.anTooltipLblFmt} />
                                     <Area type="monotone" dataKey="advantage" name={IntlCore.t("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
                                     { currentPly ? (<ReferenceLine x={currentPly} stroke="green" />) : null }
                                     
