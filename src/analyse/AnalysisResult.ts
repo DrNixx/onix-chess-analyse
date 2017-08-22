@@ -6,7 +6,7 @@ import { IUserAnalysis } from './IUserAnalysis';
 export class AnalysisResult {
     public state: string = "empty";
 
-    public completed: number = 0;
+    public completed?: number = 0;
 
     public white: IUserAnalysis = {
                     blunder: 0,

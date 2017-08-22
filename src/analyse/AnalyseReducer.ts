@@ -7,6 +7,7 @@ import { AnalysisResult } from "./AnalysisResult";
 
 const INITIAL_STATE: AnalyseState = {
     status: "empty",
+    completed: 0,
     evals: []
 }
 

@@ -3,7 +3,7 @@ import { IUserAnalysis } from './IUserAnalysis';
 
 export interface AnalyseState {
     status: string,
-    completed: number,
+    completed?: number,
     white?: IUserAnalysis,
     black?: IUserAnalysis,
     evals: AnalysisItem[]
