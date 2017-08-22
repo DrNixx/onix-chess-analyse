@@ -32,6 +32,8 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
         onPositionDotClick: (ply) => { }
     }    
 
+    private timer: NodeJS.Timer = null;
+
     private storeUnsubscribe: Unsubscribe;
 
     constructor(props: AnalyseGraphProps) {
@@ -93,7 +95,7 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
 
     renderProgress(progress: number) {
         const fmt = IntlCore.t("analyse", "completed");
-        const progressStr = sprintf(fmt, process);
+        const progressStr = sprintf(fmt, progress);
         return (
             <span className="analysis-inprogress">
                 {IntlCore.t("analyse", "inprogress")}
@@ -116,9 +118,13 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
                     </span>
                 );
             } else if (status == "inprogress") {
-                setTimeout(() => {
-                    that.loadAnalysis();
-                }, 5500);
+                if (!that.timer) {
+                    that.timer = setTimeout(() => {
+                        that.timer = null;
+                        that.loadAnalysis();
+                    }, 5500);
+                }
+                
                 return that.renderProgress(completed);
             } else if (status == "ready") {
                 return (
