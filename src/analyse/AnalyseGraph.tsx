@@ -106,11 +106,11 @@ export class AnalyseGraph extends React.Component<AnalyseGraphProps, any> {
 
     render() {
         const that = this;
-        const { store, currentPly, colorWhite, colorBlack, height } = that.props;
+        const { id, store, currentPly, colorWhite, colorBlack, height } = that.props;
         const state = store.getState();
         const { status, completed, white, black, evals} = state.analysis;
 
-        if (status != "empty") {
+        if (id && (status != "empty")) {
             if (status == "unanalysed") {
                 return (
                     <span className="analysis-request">
