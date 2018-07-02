@@ -24,5 +24,5 @@ export const AnalyseGraphTest = (container: HTMLElement, props: any) => {
         }), preloadedState);
 
     
-    ReactDOM.render(React.createElement(AnalyseGraph, { id: 0, store: store, currentPly: 6 }), container, () => { });
+    ReactDOM.render(React.createElement(AnalyseGraph, { id: 1, store: store, currentPly: 6 }), container, () => { });
 };

@@ -1,9 +1,7 @@
 node_modules
-built
+dist
 .vscode
 
 public/*.js
 public/*.js.map
-onix-chess-analyse.js
-onix-chess-analyse.js.map
 npm-debug.log
