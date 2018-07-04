@@ -6,8 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "public": "webpack --config webpack.config.js",
+    "webpack": "webpack --config webpack.config.js",
+    "stats": "webpack --profile --json > stats.json",
+    "statsp": "webpack --profile --json --mode=production > stats.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,25 +29,28 @@
   },
   "homepage": "https://github.com/DrNixx/onix-chess-analyse#readme",
   "dependencies": {
-    "lodash": "^4.17.5",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "lodash-es": "^4.17.10",
+    "onix-chess": "^1.3.18",
+    "onix-core": "^1.6.39",
+    "onix-ui": "^1.5.37",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-loadable": "^5.4.0",
     "recharts": "^1.0.0-beta.10",
-    "redux": "^3.7.2",
-    "rxjs": "^5.5.6",
-    "onix-core": "^1.2.32",
-    "onix-ui": "^1.3.35",
-    "onix-chess": "^1.1.16",
-    "warning": "^3.0.0"
+    "redux": "^4.0.0",
+    "rxjs": "^6.2.1",
+    "warning": "^4.0.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.104",
-    "@types/node": "^8.9.4",
-    "@types/react": "^15.6.14",
+    "@types/lodash-es": "^4.17.0",
+    "@types/node": "^10.5.1",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "@types/recharts": "^1.0.23",
+    "clean-webpack-plugin": "^0.1.19",
     "ts-loader": "^4.4.2",
     "typescript": "^2.9.2",
     "webpack": "^4.14.0",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-cli": "^3.0.8"
   }
 }

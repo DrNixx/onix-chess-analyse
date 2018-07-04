@@ -2,7 +2,9 @@ import * as AnalyseActionTypes from './analyse/AnalyseActionTypes';
 import * as AnalyseActionConsts from './analyse/AnalyseActionConsts';
 import * as AnalyseActions from './analyse/AnalyseActions';
 
-export { AnalyseGraph, AnalyseGraphProps } from './analyse/AnalyseGraph';
+export { AnalyseGraph } from './analyse/AnalyseGraph';
+export { AnalyseGraphAsync } from './analyse/AnalyseGraphAsync';
+export { AnalyseGraphProps } from './analyse/AnalyseGraphProps';
 export { IUserAnalysis } from './analyse/IUserAnalysis';
 export { AnalysisResult } from './analyse/AnalysisResult';
 export { AnalysisGlyph } from './analyse/AnalysisGlyph';

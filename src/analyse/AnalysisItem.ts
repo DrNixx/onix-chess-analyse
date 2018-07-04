@@ -1,4 +1,3 @@
-import toSafeInteger = require('lodash/toSafeInteger');
 import { sprintf, Intl as IntlCore } from 'onix-core';
 import { Color, Chess as Engine } from 'onix-chess';
 import { AnalysisJudgment } from "./AnalysisJudgment";

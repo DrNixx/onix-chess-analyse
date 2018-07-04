@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { Logger } from 'onix-core';
 import { AnalyseState } from "./AnalyseState";
 import { AnalyseAction } from "./AnalyseActions";
 import * as actions from './AnalyseActionConsts';

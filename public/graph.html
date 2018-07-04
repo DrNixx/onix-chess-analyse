@@ -5,10 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Position setup test</title>
         <link href="assets/css/bootstrap.css" rel="stylesheet" />
+        <link href="assets/css/pages.css" rel="stylesheet" />
         <link href="assets/css/chess.css" rel="stylesheet" />
         <style>
             .analyse {
-  width: 100%; }
+  width: 100%; display: flex; }
   .analyse .graph-container {
     width: calc(100% - 255px);
     display: inline-block; }
@@ -57,9 +58,9 @@
                 </div>
             </div>
         </div>
-        <script src="chess-analyse.react.js"></script>
-        <script src="chess-analyse.app.js"></script>
-        <script src="chess-analyse.tests.js"></script>
+        <script src="js/chess-analyse.manifest.js"></script>
+        <script src="js/chess-analyse.vendors.js"></script>
+        <script src="js/chess-analyse.tests.js"></script>
         <script>
             var props = {
     "state": "ready",

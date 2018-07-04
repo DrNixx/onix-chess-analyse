@@ -1,4 +1,4 @@
-import toSafeInteger = require('lodash/toSafeInteger');
+import toSafeInteger from 'lodash-es/toSafeInteger';
 import { AnalysisItem } from './AnalysisItem';
 import { Intl } from '../Intl';
 import { IUserAnalysis } from './IUserAnalysis';

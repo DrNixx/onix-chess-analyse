@@ -1,5 +1,5 @@
+import { ajax } from 'rxjs/ajax';
 import { Store } from 'redux';
-import { Observable } from 'rxjs';
 import { AnalyseRelatedState } from "./AnalyseState";
 import * as analyseActions from './AnalyseActionConsts';
 import { AnalyseAction } from "./AnalyseActions";
@@ -7,7 +7,7 @@ import { AnalyseAction } from "./AnalyseActions";
 export type AnalyseStore = Store<AnalyseRelatedState>;
 
 export const gameLoadAnalysis = (store: AnalyseStore, id: number) => {
-    Observable.ajax({ 
+    ajax({ 
         url:'https://www.chess-online.com/api/analyse/game/' + id.toString(), 
         method: 'GET', 
         crossDomain: true
@@ -24,7 +24,7 @@ export const gameLoadAnalysis = (store: AnalyseStore, id: number) => {
 }
 
 export const gameRequestAnalysis = (store: AnalyseStore, id: number) => {
-    Observable.ajax({ 
+    ajax({ 
         url:'https://www.chess-online.com/fishnet/create/' + id.toString(), 
         method: 'GET', 
         crossDomain: true
