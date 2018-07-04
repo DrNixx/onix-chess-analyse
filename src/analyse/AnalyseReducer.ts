@@ -11,7 +11,7 @@ const INITIAL_STATE: AnalyseState = {
 }
 
 
-export const analyseReducer: Reducer<AnalyseState> = (state: AnalyseState = INITIAL_STATE, action: AnalyseAction) => {
+export const analyseReducer: Reducer<AnalyseState, AnalyseAction> = (state: AnalyseState = INITIAL_STATE, action: AnalyseAction) => {
     switch (action.type) {
         case actions.LOAD_ANALYSIS:
             let result = action.analysis;

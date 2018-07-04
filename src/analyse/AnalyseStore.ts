@@ -4,7 +4,7 @@ import { AnalyseRelatedState } from "./AnalyseState";
 import * as analyseActions from './AnalyseActionConsts';
 import { AnalyseAction } from "./AnalyseActions";
 
-export type AnalyseStore = Store<AnalyseRelatedState>;
+export type AnalyseStore = Store<AnalyseRelatedState, AnalyseAction>;
 
 export const gameLoadAnalysis = (store: AnalyseStore, id: number) => {
     ajax({ 
