@@ -24,7 +24,7 @@ module.exports = {
             name: "manifest"
         },
         splitChunks: {
-            //chunks: 'all',
+            chunks: 'all',
             //name: false,
             cacheGroups: {
                 vendor: {
