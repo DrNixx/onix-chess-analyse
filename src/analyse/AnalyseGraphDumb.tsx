@@ -133,13 +133,13 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
                         </div>
                         <div className="graph-info">
                             <div className="row">
-                                <div className="col-xs-6 col-sm-6 col-md-12 col-lg-12 white" style={{ backgroundColor: colorWhite}}>
+                                <div className="col-6 col-sm-6 col-md-12 col-lg-12 white" style={{ backgroundColor: colorWhite}}>
                                     <span>{IntlCore.t("analyse", "inaccuracies")}:<span>{white.inaccuracy}</span></span>
                                     <span>{IntlCore.t("analyse", "mistakes")}:<span>{white.mistake}</span></span>
                                     <span>{IntlCore.t("analyse", "blunders")}:<span>{white.blunder}</span></span>
                                     <span>{IntlCore.t("analyse", "averageCentipawnLoss")}:<span>{white.acpl}</span></span>
                                 </div>
-                                <div className="col-xs-6 col-sm-6 col-md-12 col-lg-12 black" style={{ backgroundColor: colorBlack}}>
+                                <div className="col-6 col-sm-6 col-md-12 col-lg-12 black" style={{ backgroundColor: colorBlack}}>
                                     <span>{IntlCore.t("analyse", "inaccuracies")}:<span>{black.inaccuracy}</span></span>
                                     <span>{IntlCore.t("analyse", "mistakes")}:<span>{black.mistake}</span></span>
                                     <span>{IntlCore.t("analyse", "blunders")}:<span>{black.blunder}</span></span>
