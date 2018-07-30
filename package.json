@@ -1,6 +1,6 @@
 {
   "name": "onix-chess-analyse",
-  "version": "1.4.28",
+  "version": "1.4.29",
   "description": "Chess game analyser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
