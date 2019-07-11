@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Unsubscribe } from 'redux';
 import { Intl as IntlCore, sprintf } from 'onix-core';
-import { SafeAnchor } from 'react-bootstrap';
+import { SafeAnchor, Container, Row, Col } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 import * as analyseActions from './AnalyseActionConsts';
@@ -131,22 +131,22 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
-                        <div className="graph-info">
-                            <div className="row">
-                                <div className="col-6 col-sm-6 col-md-12 col-lg-12 white" style={{ backgroundColor: colorWhite}}>
+                        <Container className="graph-info">
+                            <Row>
+                                <Col xs={6} sm={6} md={12} lg={12} className="white" style={{ backgroundColor: colorWhite}}>
                                     <span>{IntlCore.t("analyse", "inaccuracies")}:<span>{white.inaccuracy}</span></span>
                                     <span>{IntlCore.t("analyse", "mistakes")}:<span>{white.mistake}</span></span>
                                     <span>{IntlCore.t("analyse", "blunders")}:<span>{white.blunder}</span></span>
                                     <span>{IntlCore.t("analyse", "averageCentipawnLoss")}:<span>{white.acpl}</span></span>
-                                </div>
-                                <div className="col-6 col-sm-6 col-md-12 col-lg-12 black" style={{ backgroundColor: colorBlack}}>
+                                </Col>
+                                <Col xs={6} sm={6} md={12} lg={12} className="black" style={{ backgroundColor: colorBlack}}>
                                     <span>{IntlCore.t("analyse", "inaccuracies")}:<span>{black.inaccuracy}</span></span>
                                     <span>{IntlCore.t("analyse", "mistakes")}:<span>{black.mistake}</span></span>
                                     <span>{IntlCore.t("analyse", "blunders")}:<span>{black.blunder}</span></span>
                                     <span>{IntlCore.t("analyse", "averageCentipawnLoss")}:<span>{black.acpl}</span></span>
-                                </div>
-                            </div>
-                        </div>
+                                </Col>
+                            </Row>
+                        </Container>
                     </div>
                     
                 );
