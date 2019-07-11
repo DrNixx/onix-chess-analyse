@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Unsubscribe } from 'redux';
 import { Intl as IntlCore, sprintf } from 'onix-core';
-import { SafeAnchor } from 'onix-ui'
+import { SafeAnchor } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 import * as analyseActions from './AnalyseActionConsts';
@@ -103,7 +103,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
             if (status == "unanalysed") {
                 return (
                     <span className="analysis-request">
-                        <SafeAnchor className="btn btn-info" href="#" onClick={that.requestAnalysis}>{IntlCore.t("analyse", "request")}</SafeAnchor>
+                        <SafeAnchor className="btn btn-info" tabIndex={-1} href="#" onClick={that.requestAnalysis}>{IntlCore.t("analyse", "request")}</SafeAnchor>
                     </span>
                 );
             } else if (status == "inprogress") {
