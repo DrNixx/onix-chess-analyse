@@ -1,31 +1,61 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
+
+const { PRODUCTION, hmrEnabled } = require('./config');
+const PATHS = require('./paths');
+
+const entryPoints = {
+    //app: path.resolve(__dirname, PATHS.src.scripts),
+    tests: path.resolve(__dirname, PATHS.src.tests),
+};
+
+const hotMiddlewareString = 'webpack-hot-middleware/client?quiet=true&noInfo=true';
 
 module.exports = {
-    mode: 'development',
-    devtool: 'inline-source-map', 
-
-    entry: {
-        app: ["./src/index.ts"],
-        tests: ["./src/test/index.ts"]
-    },
-
-    output: {
+    entry: Object.keys(entryPoints).reduce((acc, currentKey) => {
+		acc[currentKey] = [entryPoints[currentKey]];
+		!PRODUCTION && hmrEnabled && acc[currentKey].push(hotMiddlewareString);
+		return acc;
+    }, {}),
+    
+	output: {
         libraryTarget: "umd",
         library: "onix",
-        path: path.join(__dirname, "public/js"),
-        publicPath: 'js/',
-        chunkFilename: "chess-analyse.[name].js",
-        filename: "chess-analyse.[name].js"
+		filename: 'chess-movetimes.[name].js',
+		path: path.resolve(__dirname, PATHS.build.scripts),
+		publicPath: '/assets/js',
+    },
+    
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                options: { configFile: 'tsconfig.webpack.json' },
+                exclude: /node_modules/
+            },
+            {
+				type: 'javascript/auto',
+				test: /\.json$/,
+				loader: 'json-loader',
+			},
+        ] 
     },
 
-    optimization: {
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+        modules: ['node_modules'],
+    },
+
+    plugins: PRODUCTION ? [] : [new webpack.HotModuleReplacementPlugin()],
+	devtool: PRODUCTION ? false : '#eval-source-map',
+	mode: PRODUCTION ? 'production' : 'development',
+	optimization: {
         runtimeChunk: {
             name: "manifest"
         },
         splitChunks: {
             chunks: 'all',
-            //name: false,
             cacheGroups: {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
@@ -34,25 +64,8 @@ module.exports = {
                     chunks: "all"
                 }
             }
-        }
-   },
-
-    plugins: [
-        new CleanWebpackPlugin(['public/js'])
-    ],
-
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                options: { configFile: 'tsconfig.webpack.json' },
-                exclude: /node_modules/
-            }
-        ]
-    },
-
-    resolve: {
-        extensions: ['.tsx', '.ts', '.js']
-    }
+        },
+		minimize: PRODUCTION,
+	},
+	watch: !PRODUCTION && !hmrEnabled,
 };
