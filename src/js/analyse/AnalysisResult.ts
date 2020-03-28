@@ -2,11 +2,12 @@ import toSafeInteger from 'lodash-es/toSafeInteger';
 import { AnalysisItem } from './AnalysisItem';
 import { Intl } from '../Intl';
 import { IUserAnalysis } from './IUserAnalysis';
+import { Color, Chess as Engine, Colors } from 'onix-chess';
 
 export class AnalysisResult {
     public state: string = "empty";
 
-    public completed?: number = 0;
+    public completed: number = 0;
 
     public white: IUserAnalysis = {
                     blunder: 0,
@@ -24,7 +25,7 @@ export class AnalysisResult {
 
     public analysis: AnalysisItem[] = [];
 
-    public constructor(raw) {
+    public constructor(raw?: any) {
         Intl.register();
         
         if (raw) {
@@ -64,16 +65,16 @@ export class AnalysisResult {
                 start.ply = 0;
                 start.move = "";
                 start.eval = 0;
-                start.mate = null;
+                start.mate = undefined;
                 start.best = "";
-                start.variation = null;
+                start.variation = undefined;
                 start.depth = 0;
                 start.time = 0;
         
                 this.analysis.unshift(start);
 
                 const len = this.analysis.length;
-                let prev = 0;
+                let prev: number | undefined = 0;
                 for (let i = 1; i < len; i++) {
                     this.analysis[i].normalize(prev);
                     prev = this.analysis[i].eval;
@@ -86,5 +87,25 @@ export class AnalysisResult {
                 }
             }
         }
+    }
+
+    public findNext(color: Colors.BW, ply: number, type: "blunder" | "mistake" | "inaccuracy"): number | undefined {
+        const judgments = this.analysis.filter((value) => {
+            return ((value.color === color) && (value.judgment !== undefined) && (type === value.judgment.name.toLowerCase()));
+        });
+
+        if (judgments.length > 0) {
+            const right = judgments.filter((value) => { return value.ply > ply});
+            if (right.length > 0) {
+                return right[0].ply;
+            }
+
+            const left = judgments.filter((value) => { return value.ply < ply});
+            if (left.length > 0) {
+                return left[0].ply;
+            }
+        }
+        
+        return undefined;
     }
 }

@@ -5,7 +5,7 @@ export class AnalysisGlyph {
     
     public symbol: string;
 
-    public constructor(raw) {
+    public constructor(raw: any) {
         this.name = raw.name;
         this.symbol = raw.symbol;
     }

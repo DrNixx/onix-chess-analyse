@@ -16,10 +16,11 @@ export class Intl {
                     inprogress: "Партия анализируется... Обновите страницу через несколько минут.",
                     completed: "Завершено %d %%",
                     loading: "Загрузка...",
-                    averageCentipawnLoss: "В среднем потеряно сотых пешки",
-                    inaccuracies: "Сомнительные ходы",
+                    averageCentipawnLoss: "Средние потери (p/100)",
+                    averageCentipawnLossTitle: "В среднем потеряно сотых пешки",
+                    inaccuracies: "Неточности",
                     mistakes: "Ошибки",
-                    blunders: "Грубые ошибки",
+                    blunders: "Зевки",
                 },
 
                 'en-us': {
@@ -32,6 +33,7 @@ export class Intl {
                     completed: "Completed %d %%",
                     loading: "Loading...",
                     averageCentipawnLoss: "Average centipawn loss",
+                    averageCentipawnLossTitle: "Average centipawn loss",
                     inaccuracies: "Inaccuracies",
                     mistakes: "Mistakes",
                     blunders: "Blunders",

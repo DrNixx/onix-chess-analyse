@@ -21,7 +21,7 @@ module.exports = {
 	output: {
         libraryTarget: "umd",
         library: "onix",
-		filename: 'chess-movetimes.[name].js',
+		filename: 'chess-analyse.[name].js',
 		path: path.resolve(__dirname, PATHS.build.scripts),
 		publicPath: '/assets/js',
     },

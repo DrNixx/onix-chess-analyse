@@ -7,9 +7,9 @@ import { AnalysisResult } from "./AnalysisResult";
 const INITIAL_STATE: AnalyseState = {
     status: "empty",
     completed: 0,
-    evals: []
+    evals: [],
+    result: undefined
 }
-
 
 export const analyseReducer: Reducer<AnalyseState, AnalyseAction> = (state: AnalyseState = INITIAL_STATE, action: AnalyseAction) => {
     switch (action.type) {
@@ -24,14 +24,16 @@ export const analyseReducer: Reducer<AnalyseState, AnalyseAction> = (state: Anal
                 completed: analysis.completed,
                 white: analysis.white,
                 black: analysis.black,
-                evals: analysis.analysis
+                evals: analysis.analysis,
+                result: analysis
             };
 
         case actions.REQUEST_ANALYSIS:
             return {
                 ...state,
                 status: "inprogress",
-                evals: []
+                evals: [],
+                result: undefined
             };
         default:
             return state;

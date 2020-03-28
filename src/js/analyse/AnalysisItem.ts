@@ -1,11 +1,11 @@
 import { sprintf, Intl as IntlCore } from 'onix-core';
-import { Color, Chess as Engine } from 'onix-chess';
+import { Color, Chess as Engine, Colors } from 'onix-chess';
 import { AnalysisJudgment } from "./AnalysisJudgment";
 
 export class AnalysisItem {
-    public ply: number;
+    public ply: number = 0;
 
-    public move: string;
+    public move: string = "";
 
     /**
      * Position eval before move (centipawn)
@@ -15,19 +15,19 @@ export class AnalysisItem {
     /**
      * Ceiled position eval before move (centipawn)
      */
-    public ceil?: number;
+    public ceil: number = 0;
 
     /**
      * Ceiled position eval before move (pawn)
      */
-    public ceilPawn?: number;
+    public ceilPawn: number = 0;
 
     /**
      * Position eval after move
      */
-    public advantage?: number;
+    public advantage: number = 0;
 
-    public mate?: number;
+    public mate?: number = undefined;
     
     public best?: string;
 
@@ -39,7 +39,7 @@ export class AnalysisItem {
 
     public time?: number;
 
-    public color?: boolean;
+    public color?: Colors.BW;
 
     public turn?: number;
 
@@ -47,18 +47,19 @@ export class AnalysisItem {
 
     public desc?: string;
 
-    public constructor(raw?, ply?: number) {
+    public constructor(raw?: any, ply?: number) {
         if (raw) {
             this.ply = raw.ply || ply || 0;
+            this.color = Engine.plyToColor(this.ply);
             this.move = raw.move;
             this.eval = raw.eval;
             if (!this.eval && (this.eval !== 0)) {
-                this.eval = null;
+                this.eval = undefined;
             }
             
             this.mate = raw.mate;
             if (!this.mate && (this.mate !== 0)) {
-                this.mate = null;
+                this.mate = undefined;
             }
     
             this.best = raw.best;
@@ -72,12 +73,12 @@ export class AnalysisItem {
         }
     }
 
-    public normalize(prev: number) {
-        if (this.eval === null) {
-            if (this.mate !== null) {
+    public normalize(prev: number | undefined) {
+        if (this.eval === undefined) {
+            if (this.mate !== undefined) {
                 this.eval = Math.sign(this.mate) * 1000;
             } else {
-                this.eval = prev;
+                this.eval = prev || 0;
             }
             
         }
@@ -90,13 +91,13 @@ export class AnalysisItem {
         if (this.ceil < -1000) {
             this.ceil = -1000;
         }
+        
 
         this.ceilPawn = this.ceil / 100;
         this.advantage = this.ceilPawn;
 
         this.turn = this.ply ? Engine.plyToTurn(this.ply) : 0;
-        const color = this.ply ? Engine.plyToColor(this.ply) : Color.NoColor;
-        this.name = "" + this.turn + (color === Color.White ? ". " : "... ") + this.move;
+        this.name = "" + this.turn + (this.color === Color.White ? ". " : "... ") + this.move;
     }
 
     public extend(next: AnalysisItem|null) {
@@ -106,7 +107,7 @@ export class AnalysisItem {
 
         this.desc = "";
 
-        if (this.mate !== null) {
+        if (this.mate !== undefined) {
             if (this.mate !== 0) {
                 const fmt = IntlCore.t("analyse", "mateIn");
                 this.desc = sprintf(fmt, this.mate);

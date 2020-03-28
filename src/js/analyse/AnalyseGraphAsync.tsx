@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Loadable from "react-loadable";
+import * as Loadable from "react-loadable";
 import { AnalyseGraphProps } from './AnalyseGraphProps';
 
 const LoadableGraph = Loadable({
     loader: () => import(/* webpackChunkName: "analysisGraph" */ './AnalyseGraphDumb'),
-    render(loaded, props: AnalyseGraphProps) {
+    render(loaded: any, props: AnalyseGraphProps) {
         let Component = loaded.AnalyseGraphDumb;
         return <Component {...props} />;
     },

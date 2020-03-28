@@ -1,13 +1,17 @@
 {% extends "./ext/base.nunj" %}
 {% from "parts/piecesBoard.nunj" import piecesBoard %}
-{% block title %}Move times example {{ super() }}{% endblock title %}
+{% block title %}Game analysis example {{ super() }}{% endblock title %}
 
 {% block stylesheets %}
-	{{ super() }}
-	<style>
-		.movetimes .recharts-text {
-            font-size: .75rem;
+    <style>
+        html, body {
+            font-size: 14px;
         }
+    </style>
+    {{ super() }}
+    <link rel="stylesheet" href="assets/css/analyse.css" />
+	<style>
+		
 	</style>
 {% endblock stylesheets %}
 
@@ -17,7 +21,7 @@
     <div class="progress-circle-indeterminate"></div>
     
 
-    <script src="js/chess-analyse.manifest.js"></script>
-    <script src="js/chess-analyse.vendors~tests.js"></script>
-    <script src="js/chess-analyse.tests.js"></script>
+    <script src="assets/js/chess-analyse.manifest.js"></script>
+    <script src="assets/js/chess-analyse.vendors~tests.js"></script>
+    <script src="assets/js/chess-analyse.tests.js"></script>
 {% endblock content %}

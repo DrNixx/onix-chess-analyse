@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createStore as reduxCreateStore, combineReducers } from 'redux';
-import { AnalyseGraphAsync } from '../analyse/AnalyseGraphAsync';
-import { AnalysisResult } from "../analyse/AnalysisResult";
-import { AnalyseRelatedState } from "../analyse/AnalyseState";
-import { analyseReducer } from '../analyse/AnalyseReducer';
+import { AnalyseGraphAsync } from '../js/analyse/AnalyseGraphAsync';
+import { AnalysisResult } from "../js/analyse/AnalysisResult";
+import { AnalyseRelatedState } from "../js/analyse/AnalyseState";
+import { analyseReducer } from '../js/analyse/AnalyseReducer';
 
 var props = {
     "state": "ready",
@@ -1362,9 +1362,11 @@ export const AnalyseGraphTest = (container: HTMLElement, props: any) => {
     const preloadedState: AnalyseRelatedState = {
         analysis: {
             status: result.state,
+            completed: 100,
             white: result.white,
             black: result.black,
-            evals: result.analysis
+            evals: result.analysis,
+            result: result
         }
     }
 
@@ -1374,7 +1376,7 @@ export const AnalyseGraphTest = (container: HTMLElement, props: any) => {
         }), preloadedState);
 
     
-    ReactDOM.render(React.createElement(AnalyseGraphAsync, { id: 1, store: store, currentPly: 6 }), container, () => { });
+    ReactDOM.render(React.createElement(AnalyseGraphAsync, { id: 1, store: store, ply: 6 }), container, () => { });
 };
 
-AnalyseGraphTest(document.getElementById("boardHere"), props);
+AnalyseGraphTest(document.getElementById("boardHere")!, props);

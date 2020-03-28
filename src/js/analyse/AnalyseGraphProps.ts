@@ -4,9 +4,7 @@ export interface AnalyseGraphProps {
     id: number,
     store: AnalyseStore,
     height?: number,
-    colorWhite?: string,
-    colorBlack?: string,
     startPly?: number,
-    currentPly?: number,
+    ply?: number,
     onPositionDotClick?: (ply: number) => void
 }

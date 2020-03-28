@@ -3,13 +3,13 @@ import { AnalysisGlyph } from "./AnalysisGlyph";
 
 export class AnalysisJudgment {
     
-    public glyph?: AnalysisGlyph = null;
+    public glyph?: AnalysisGlyph = undefined;
 
     public name: string;
 
     public comment: string;
 
-    public constructor(raw) {
+    public constructor(raw: any) {
         this.name = raw.name;
         this.comment = raw.comment;
 
