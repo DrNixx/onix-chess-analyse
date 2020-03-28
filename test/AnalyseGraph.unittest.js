@@ -1,6 +1,9 @@
 import React from 'react';
+import { createStore as reduxCreateStore, combineReducers } from 'redux';
 import { expect } from 'chai';  
-import { MovesGraph } from '../dist/js/analyse/AnalyseGraph';
+import { AnalyseGraph } from '../dist/js/analyse/AnalyseGraph';
+import { AnalysisResult } from '../dist/js/analyse/AnalysisResult';
+import { analyseReducer } from '../dist/js/analyse/AnalyseReducer';
   
 describe('<AnalyseGraph/>', function () {
     it('create AnalyseGraph and test some props', function () {
@@ -1353,8 +1356,25 @@ describe('<AnalyseGraph/>', function () {
                 }
             ]
         };
+
+        const result = new AnalysisResult(props);
+        const preloadedState = {
+            analysis: {
+                status: result.state,
+                completed: 100,
+                white: result.white,
+                black: result.black,
+                evals: result.analysis,
+                result: result
+            }
+        }
+
+        const store = reduxCreateStore(
+            combineReducers({
+                analysis: analyseReducer
+            }), preloadedState);
         
-        const wrapper = mount(<AnalyseGraph {...props}/>);
-        expect(wrapper.props().state).to.be.equal("ready");
+        const wrapper = mount(<AnalyseGraph id={1} store={store} ply={6} />);
+        expect(wrapper.props().ply).to.be.equal(6);
     });
 });
