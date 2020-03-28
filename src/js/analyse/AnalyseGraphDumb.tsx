@@ -53,8 +53,8 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
     private anTooltipValFmt = (...params: any[]) => {
         let obj = params[2];
         return (
-            <span className="small">
-                <span className="bold">{obj.payload.desc}</span><br/>
+            <span>
+                <strong>{obj.payload.desc}</strong><br/>
                 <span>{obj.payload.name}</span>
             </span>
         );
@@ -166,7 +166,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
                                     <XAxis dataKey="ply" hide={true} />
                                     <YAxis />
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <Tooltip formatter={anTooltipValFmt} labelFormatter={anTooltipLblFmt} />
+                                    <Tooltip contentStyle={{ "font-size": ".75rem" }} formatter={anTooltipValFmt} labelFormatter={anTooltipLblFmt} />
                                     <Area type="monotone" dataKey="advantage" name={ _("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
                                     { ply ? (<ReferenceLine x={ply} stroke="green" />) : null }
                                 </AreaChart>
