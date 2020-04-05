@@ -1,6 +1,7 @@
-import { sprintf, Intl as IntlCore } from 'onix-core';
+import { _, sprintf } from 'onix-core';
 import { Color, Chess as Engine, Colors } from 'onix-chess';
 import { AnalysisJudgment } from "./AnalysisJudgment";
+import { register } from '../i18n';
 
 export class AnalysisItem {
     public ply: number = 0;
@@ -48,6 +49,8 @@ export class AnalysisItem {
     public desc?: string;
 
     public constructor(raw?: any, ply?: number) {
+        register();
+        
         if (raw) {
             this.ply = raw.ply || ply || 0;
             this.color = Engine.plyToColor(this.ply);
@@ -109,7 +112,7 @@ export class AnalysisItem {
 
         if (this.mate !== undefined) {
             if (this.mate !== 0) {
-                const fmt = IntlCore.t("analyse", "mateIn");
+                const fmt = _("analyse", "mateIn");
                 this.desc = sprintf(fmt, this.mate);
             }
         } else {

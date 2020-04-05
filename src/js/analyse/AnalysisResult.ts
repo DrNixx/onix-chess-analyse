@@ -1,8 +1,8 @@
 import toSafeInteger from 'lodash-es/toSafeInteger';
 import { AnalysisItem } from './AnalysisItem';
-import { Intl } from '../Intl';
+import { register } from '../i18n';
 import { IUserAnalysis } from './IUserAnalysis';
-import { Color, Chess as Engine, Colors } from 'onix-chess';
+import { Colors } from 'onix-chess';
 
 export class AnalysisResult {
     public state: string = "empty";
@@ -26,7 +26,7 @@ export class AnalysisResult {
     public analysis: AnalysisItem[] = [];
 
     public constructor(raw?: any) {
-        Intl.register();
+        register();
         
         if (raw) {
             if (raw.state) {

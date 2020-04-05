@@ -6,7 +6,7 @@ import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianG
 import { dummyStore, gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 import * as analyseActions from './AnalyseActionConsts';
 import { AnalysePositionAction } from "./AnalyseActions";
-import { Intl } from '../Intl';
+import { register } from '../i18n';
 import { AnalyseGraphProps } from './AnalyseGraphProps';
 import { IUserAnalysis } from './IUserAnalysis';
 import { Color, Colors } from 'onix-chess';
@@ -29,7 +29,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
     constructor(props: AnalyseGraphProps) {
         super(props);
 
-        Intl.register();
+        register();
     }
 
     componentDidMount() {
