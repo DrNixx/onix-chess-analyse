@@ -1,5 +1,4 @@
-import { AnalysisItem } from "./AnalysisItem";
-import { IUserAnalysis } from './IUserAnalysis';
+import { IUserAnalysis, ITreePart } from './Interfaces';
 import { AnalysisResult } from './AnalysisResult';
 
 export interface AnalyseState {
@@ -7,7 +6,6 @@ export interface AnalyseState {
     completed: number,
     white?: IUserAnalysis,
     black?: IUserAnalysis,
-    evals: AnalysisItem[],
     result?: AnalysisResult
 }
 

@@ -1,18 +1,15 @@
+import { GameNavigateToPlyAction } from "onix-chess/dist/actions/ChessActions";
 import * as types from './AnalyseActionTypes';
-import { AnalysisResult } from './AnalysisResult';
+import { IView } from './Interfaces';
 
 export type LoadAnalysisAction = {
     type: types.LOAD_ANALYSIS,
-    analysis: any
+    analysis: IView
 };
 
 export type RequestAnalysisAction = {
     type: types.REQUEST_ANALYSIS
 };
 
-export type AnalysePositionAction = {
-    type: types.ANALYSE_POSITION,
-    ply: number
-};
 
-export type AnalyseAction = LoadAnalysisAction | RequestAnalysisAction | AnalysePositionAction;
+export type AnalyseAction = LoadAnalysisAction | RequestAnalysisAction | GameNavigateToPlyAction;

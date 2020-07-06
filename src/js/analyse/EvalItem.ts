@@ -1,17 +1,20 @@
 import { _, sprintf } from 'onix-core';
 import { Color, Chess as Engine, Colors } from 'onix-chess';
-import { AnalysisJudgment } from "./AnalysisJudgment";
-import { register } from '../i18n';
+import { register as i18nRegister } from '../i18n';
+import { ITreePart, IJudgment, IGlyph } from './Interfaces';
 
-export class AnalysisItem {
+export class EvalItem {
+
     public ply: number = 0;
 
-    public move: string = "";
+    public color?: Colors.BW;
+
+    public san: string = "";
 
     /**
      * Position eval before move (centipawn)
      */
-    public eval?: number;
+    public cp?: number;
 
     /**
      * Ceiled position eval before move (centipawn)
@@ -34,13 +37,9 @@ export class AnalysisItem {
 
     public variation?: string;
 
-    public judgment?: AnalysisJudgment;
-
     public depth?: number;
 
     public time?: number;
-
-    public color?: Colors.BW;
 
     public turn?: number;
 
@@ -48,45 +47,55 @@ export class AnalysisItem {
 
     public desc?: string;
 
-    public constructor(raw?: any, ply?: number) {
-        register();
+    public judgment?: IJudgment[];
+
+    public glyphs?: IGlyph[];
+
+    public constructor(data?: ITreePart) {
+        i18nRegister();
         
-        if (raw) {
-            this.ply = raw.ply || ply || 0;
+        if (data) {
+            this.ply = data.ply;
             this.color = Engine.plyToColor(this.ply);
-            this.move = raw.move;
-            this.eval = raw.eval;
-            if (!this.eval && (this.eval !== 0)) {
-                this.eval = undefined;
-            }
-            
-            this.mate = raw.mate;
-            if (!this.mate && (this.mate !== 0)) {
-                this.mate = undefined;
+            this.san = data.san;
+            if (data.eval) {
+                this.cp = data.eval.cp;
+                if (!this.cp && (this.cp !== 0)) {
+                    this.cp = undefined;
+                }
+
+                this.mate = data.eval.mate;
+                if (!this.mate && (this.mate !== 0)) {
+                    this.mate = undefined;
+                }
+
+                this.best = data.eval.best;
+                this.variation = data.eval.variation;
+                this.depth = data.eval.depth;
+                this.time = data.eval.time;
             }
     
-            this.best = raw.best;
-            this.variation = raw.variation;
-            this.depth = raw.depth;
-            this.time = raw.time;
-    
-            if (raw.judgment) {
-                this.judgment = new AnalysisJudgment(raw.judgment);
+            if (data.comments) {
+                this.judgment = data.comments;
+            }
+
+            if (data.glyphs) {
+                this.glyphs = data.glyphs;
             }
         }
     }
 
-    public normalize(prev: number | undefined) {
-        if (this.eval === undefined) {
+    public normalize(prev: EvalItem) {
+        if (this.cp === undefined) {
             if (this.mate !== undefined) {
-                this.eval = Math.sign(this.mate) * 1000;
+                this.cp = Math.sign(this.mate) * 1000;
             } else {
-                this.eval = prev || 0;
+                this.cp = prev.cp ?? 0;
             }
             
         }
 
-        this.ceil = this.eval;
+        this.ceil = this.cp;
         if (this.ceil > 1000) {
             this.ceil = 1000;
         }
@@ -100,13 +109,11 @@ export class AnalysisItem {
         this.advantage = this.ceilPawn;
 
         this.turn = this.ply ? Engine.plyToTurn(this.ply) : 0;
-        this.name = "" + this.turn + (this.color === Color.White ? ". " : "... ") + this.move;
+        this.name = "" + this.turn + (this.color === Color.White ? ". " : "... ") + this.san;
     }
 
-    public extend(next: AnalysisItem|null) {
-        if (next !== null) {
-            this.advantage = next.ceilPawn; 
-        }
+    public extend(next: EvalItem) {
+        this.advantage = next.ceilPawn; 
 
         this.desc = "";
 

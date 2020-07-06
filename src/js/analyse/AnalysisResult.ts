@@ -1,13 +1,16 @@
 import toSafeInteger from 'lodash-es/toSafeInteger';
-import { AnalysisItem } from './AnalysisItem';
-import { register } from '../i18n';
-import { IUserAnalysis } from './IUserAnalysis';
 import { Colors } from 'onix-chess';
+import { register as i18nRegister } from '../i18n';
+import { IUserAnalysis, IGameAnalysis, IView } from './Interfaces';
+import { EvalItem } from './EvalItem';
 
-export class AnalysisResult {
+
+export class AnalysisResult implements IGameAnalysis {
     public state: string = "empty";
-
+    
     public completed: number = 0;
+    
+    public by?: string;
 
     public white: IUserAnalysis = {
                     blunder: 0,
@@ -23,66 +26,58 @@ export class AnalysisResult {
                     acpl: 0,
                 };
 
-    public analysis: AnalysisItem[] = [];
+    public analysis: EvalItem[] = [];
 
-    public constructor(raw?: any) {
-        register();
+    public constructor(data?: IView) {
+        i18nRegister();
         
-        if (raw) {
-            if (raw.state) {
-                this.state = raw.state;
+        let that = this;
+
+        if (data && data.analysis) {
+            let analysis = data.analysis;
+            if (analysis.state) {
+                that.state = analysis.state;
             }
 
-            if ((this.state == "inprogress") && (raw.completed)) {
-                this.completed = toSafeInteger(raw.completed)
+            if ((that.state == "inprogress") && (analysis.completed)) {
+                that.completed = toSafeInteger(analysis.completed)
             }
 
-            if (raw.white) {
-                this.white = {
-                    blunder: toSafeInteger(raw.white.blunder),
-                    mistake: toSafeInteger(raw.white.mistake),
-                    inaccuracy: toSafeInteger(raw.white.inaccuracy),
-                    acpl: toSafeInteger(raw.white.acpl)
+            if (analysis.white) {
+                that.white = {
+                    blunder: toSafeInteger(analysis.white.blunder),
+                    mistake: toSafeInteger(analysis.white.mistake),
+                    inaccuracy: toSafeInteger(analysis.white.inaccuracy),
+                    acpl: toSafeInteger(analysis.white.acpl)
                 }
             }
 
-            if (raw.black) {
-                this.black = {
-                    blunder: toSafeInteger(raw.black.blunder),
-                    mistake: toSafeInteger(raw.black.mistake),
-                    inaccuracy: toSafeInteger(raw.black.inaccuracy),
-                    acpl: toSafeInteger(raw.black.acpl)
+            if (analysis.black) {
+                that.black = {
+                    blunder: toSafeInteger(analysis.black.blunder),
+                    mistake: toSafeInteger(analysis.black.mistake),
+                    inaccuracy: toSafeInteger(analysis.black.inaccuracy),
+                    acpl: toSafeInteger(analysis.black.acpl)
                 }
             }
 
-            if (raw.analysis) {
-                for (let i = 0; i < raw.analysis.length; i++) {
-                    let item = new AnalysisItem(raw.analysis[i], i + 1);
-                    this.analysis[i] = item;
-                }
+            if (data.treeParts) {
+                let evals = data.treeParts;
+                
+                evals.forEach((ev) => {
+                    that.analysis.push(new EvalItem(ev));
+                });
 
-                let start = new AnalysisItem();
-                start.ply = 0;
-                start.move = "";
-                start.eval = 0;
-                start.mate = undefined;
-                start.best = "";
-                start.variation = undefined;
-                start.depth = 0;
-                start.time = 0;
-        
-                this.analysis.unshift(start);
-
-                const len = this.analysis.length;
-                let prev: number | undefined = 0;
-                for (let i = 1; i < len; i++) {
-                    this.analysis[i].normalize(prev);
-                    prev = this.analysis[i].eval;
-                }
+                const len = that.analysis.length;
+                that.analysis.forEach((ev, index, arr) => {
+                    if (index > 0) {
+                        ev.normalize(arr[index - 1]);
+                    }
+                });
 
                 for (let i = 0; i < len; i++) {
                     if (i < len - 1) {
-                        this.analysis[i].extend(this.analysis[i + 1]);
+                        that.analysis[i].extend(this.analysis[i + 1]);
                     }
                 }
             }
@@ -91,7 +86,7 @@ export class AnalysisResult {
 
     public findNext(color: Colors.BW, ply: number, type: "blunder" | "mistake" | "inaccuracy"): number | undefined {
         const judgments = this.analysis.filter((value) => {
-            return ((value.color === color) && (value.judgment !== undefined) && (type === value.judgment.name.toLowerCase()));
+            return ((value.color === color) && (value.judgment !== undefined) && (type === value.judgment[0].name.toLowerCase()));
         });
 
         if (judgments.length > 0) {

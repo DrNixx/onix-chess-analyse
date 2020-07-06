@@ -7,7 +7,8 @@ import { AnalysisResult } from "./AnalysisResult";
 const INITIAL_STATE: AnalyseState = {
     status: "empty",
     completed: 0,
-    evals: [],
+    white: undefined,
+    black: undefined,
     result: undefined
 }
 
@@ -24,7 +25,6 @@ export const analyseReducer: Reducer<AnalyseState, AnalyseAction> = (state: Anal
                 completed: analysis.completed,
                 white: analysis.white,
                 black: analysis.black,
-                evals: analysis.analysis,
                 result: analysis
             };
 
@@ -32,7 +32,6 @@ export const analyseReducer: Reducer<AnalyseState, AnalyseAction> = (state: Anal
             return {
                 ...state,
                 status: "inprogress",
-                evals: [],
                 result: undefined
             };
         default:

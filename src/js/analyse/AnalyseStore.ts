@@ -9,7 +9,7 @@ export type AnalyseStore = Store<AnalyseRelatedState, AnalyseAction>;
 export const dummyStore: AnalyseStore = reduxCreateStore(analyseReducer);
 
 export const gameLoadAnalysis = (store: AnalyseStore, id: number) => {
-    fetch('https://www.chess-online.com/api/analyse/game/' + id.toString(), {mode: "cors"})
+    fetch('https://www.chess-online.com/api/analyse/game/' + id.toString() + "?v=2", {mode: "cors"})
         .then(function(response) {
             if (!response.ok) {
                 throw Error(response.statusText);

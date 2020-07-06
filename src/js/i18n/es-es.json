@@ -1,0 +1,17 @@
+{
+    "analyse": {
+        "title": "Análisis del ordenador",
+        "startpos": "Posición inicial", 
+        "advantage": "Ventaja",
+        "mateIn": "Mate está a #%d",
+        "request": "Solicitud de análisis...",
+        "inprogress": "Análisis del juego en curso ... Vuelve a cargar la página en unos minutos.",
+        "completed": "Completado %d %%",
+        "loading": "Cargando...",
+        "averageCentipawnLoss": "Pérdida promedio en centipeones",
+        "averageCentipawnLossTitle": "Pérdida promedio en centipeones",
+        "inaccuracies": "Imprecisiones",
+        "mistakes": "Errores",
+        "blunders": "Errores graves"
+    }
+}

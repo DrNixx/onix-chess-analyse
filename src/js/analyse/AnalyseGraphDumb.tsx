@@ -5,11 +5,11 @@ import { SafeAnchor, Container, Row, Col } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { dummyStore, gameRequestAnalysis, gameLoadAnalysis } from './AnalyseStore';
 import * as analyseActions from './AnalyseActionConsts';
-import { AnalysePositionAction } from "./AnalyseActions";
+import { GameNavigateToPlyAction, NAVIGATE_TO_PLY } from "onix-chess/dist/actions/ChessActions";
 import { register } from '../i18n';
 import { AnalyseGraphProps } from './AnalyseGraphProps';
-import { IUserAnalysis } from './IUserAnalysis';
 import { Color, Colors } from 'onix-chess';
+import { IUserAnalysis } from './Interfaces';
 import { AnalysisResult } from './AnalysisResult';
 
 export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
@@ -18,8 +18,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
         store: dummyStore,
         height: 400,
         startPly: 0,
-        ply: 0,
-        onPositionDotClick: (ply) => { }
+        ply: 0
     }
 
     private timer: any = null;
@@ -77,7 +76,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
     private moveToPly = (ply?: number) => {
         if (ply !== undefined) {
             const { store } = this.props;
-            store.dispatch({ type: analyseActions.ANALYSE_POSITION, ply: ply } as AnalysePositionAction);
+            store.dispatch({ type: NAVIGATE_TO_PLY, ply: ply } as GameNavigateToPlyAction);
         }
     };
 
@@ -143,7 +142,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
         const { renderRequestBtn, renderProgress, handleClick, anTooltipValFmt, anTooltipLblFmt, renderTotalItem } = that;
         const { id, store, ply, height } = that.props;
         const state = store.getState();
-        const { status, completed, white, black, evals, result: analysis } = state.analysis;
+        const { status, completed, white, black, result: evals } = state.analysis;
 
         if (id && (status != "empty")) {
             if (status == "unanalysed") {
@@ -162,24 +161,24 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, any> {
                     <div className="analyse d-block d-lg-flex">
                         <div className="graph-container flex-grow-1">
                             <ResponsiveContainer width="100%" height={height}>
-                                <AreaChart data={evals} margin={{ top: 20, right: 30, left: 0, bottom: 0 }} onClick={handleClick}>
+                                <AreaChart data={evals?.analysis} margin={{ top: 20, right: 20, left: 0, bottom: 0 }} onClick={handleClick}>
                                     <XAxis dataKey="ply" hide={true} />
                                     <YAxis />
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <Tooltip contentStyle={{ "font-size": ".75rem" }} formatter={anTooltipValFmt} labelFormatter={anTooltipLblFmt} />
+                                    <Tooltip contentStyle={{ "fontSize": ".75rem" }} formatter={anTooltipValFmt} labelFormatter={anTooltipLblFmt} />
                                     <Area type="monotone" dataKey="advantage" name={ _("analyse", "advantage")} stroke="#8884d8" fill="#8884d8" />
                                     { ply ? (<ReferenceLine x={ply} stroke="green" />) : null }
                                 </AreaChart>
                             </ResponsiveContainer>
                         </div>
-                        <div className="graph-totals align-self-stretch" style={{ maxWidth: 250 }}>
+                        <div className="graph-totals align-self-stretch">
                             <Container className="h-100">
                                 <Row className="h-100">
                                     <Col xs={6} lg={12} className="white">
-                                        { renderTotalItem(Color.White, white!, analysis) }
+                                        { renderTotalItem(Color.White, white!, evals) }
                                     </Col>
                                     <Col xs={6} lg={12} className="black">
-                                        { renderTotalItem(Color.Black, black!, analysis) }
+                                        { renderTotalItem(Color.Black, black!, evals) }
                                     </Col>
                                 </Row>
                             </Container>
