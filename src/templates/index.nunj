@@ -22,6 +22,6 @@
     
 
     <script src="assets/js/chess-analyse.manifest.js"></script>
-    <script src="assets/js/chess-analyse.vendors~tests.js"></script>
+    <script src="assets/js/chess-analyse.vendors.js"></script>
     <script src="assets/js/chess-analyse.tests.js"></script>
 {% endblock content %}
