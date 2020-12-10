@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStore as reduxCreateStore, combineReducers } from 'redux';
-import { expect } from 'chai';  
+import { createGameState, gameReducer } from 'onix-chess';
+import { expect } from 'chai';
 import { AnalyseGraph } from '../dist/js/analyse/AnalyseGraph';
-import { AnalysisResult } from '../dist/js/analyse/AnalysisResult';
-import { analyseReducer } from '../dist/js/analyse/AnalyseReducer';
+
   
 describe('<AnalyseGraph/>', function () {
     it('create AnalyseGraph and test some props', function () {
-        var props = {
+        var data1 = {
             "game": {
                 "id": 7782247,
                 "load": false,
@@ -35,138 +35,9 @@ describe('<AnalyseGraph/>', function () {
                 "createdAt": 1554204125948,
                 "private": false,
                 "advance": true,
-                "winner": "none",
                 "lastMove": "e5g5",
                 "check": "h5",
-                "moveCentis": [
-                    0,
-                    0,
-                    1068681,
-                    84011568,
-                    6250737,
-                    34051340,
-                    741769589,
-                    179926605,
-                    83242312,
-                    7672019,
-                    249791940,
-                    207407681,
-                    54075665,
-                    383499997,
-                    299070662,
-                    146885838,
-                    721837791,
-                    82122390,
-                    613324038,
-                    485553529,
-                    2704196334,
-                    948548650,
-                    699867445,
-                    283675361,
-                    636527924,
-                    102507741,
-                    415271515,
-                    295777499,
-                    309494816,
-                    711305044,
-                    359418166,
-                    321281085,
-                    183227347,
-                    130574501,
-                    131315169,
-                    234063816,
-                    377338337,
-                    154001487,
-                    320522673,
-                    509138207,
-                    130397340,
-                    48950584,
-                    15739757,
-                    82941611,
-                    28050884,
-                    149505556,
-                    267942807,
-                    61011128,
-                    386448728,
-                    129283302,
-                    193504899,
-                    240755604,
-                    47235773,
-                    99706105,
-                    296460702,
-                    342222863,
-                    196463708,
-                    365752370,
-                    123796672,
-                    88499184,
-                    92012751,
-                    80334006,
-                    180088851,
-                    513092150,
-                    100150006,
-                    160326379,
-                    295953364,
-                    347543403,
-                    129376898,
-                    348035139,
-                    33218964,
-                    259127541,
-                    329290350,
-                    276558055,
-                    263703460,
-                    79924789,
-                    57996513,
-                    299327494,
-                    214138284,
-                    37536999,
-                    134092558,
-                    41277975,
-                    987460,
-                    240755134,
-                    19641708,
-                    411164023,
-                    194467845,
-                    134869570,
-                    42677013,
-                    80332563,
-                    43720283,
-                    183653247,
-                    516756143,
-                    84481415,
-                    38431902,
-                    87132784,
-                    5229072,
-                    348996339,
-                    75557263,
-                    211417929,
-                    172030496,
-                    69149332,
-                    14926342,
-                    221989458,
-                    86148065,
-                    121985444,
-                    9648431,
-                    81295767,
-                    2305394,
-                    308448618,
-                    3199938,
-                    54737697,
-                    20575915,
-                    187687530,
-                    41231626,
-                    118617908,
-                    967884,
-                    267235126,
-                    34912072,
-                    40799081,
-                    4487264,
-                    304138622,
-                    5196465,
-                    208541430,
-                    36614027,
-                    5375631,
-                    0
-                ],
+                "moveCentis": [],
                 "opening": {
                     "code": "A05",
                     "name": "Reti: KIA"
@@ -177,7 +48,7 @@ describe('<AnalyseGraph/>', function () {
                 "name": "\"Личный чемпионат сайта по адвансу - 2018\", финал",
                 "running": false
             },
-            "clock": {
+            "correspondence": {
                 "limit": "Адванс 10+2/21",
                 "can_pause": true,
                 "parts": [
@@ -200,13 +71,13 @@ describe('<AnalyseGraph/>', function () {
                 "name": "AHDPEI",
                 "user": {
                     "id": 32141,
-                    "username": "AHDPEI",
-                    "displayName": "Андрей",
+                    "name": "AHDPEI",
+                    "display": "Андрей",
                     "online": "12h",
                     "perfs": {
                         "maina": {
                             "games": 247,
-                            "rating": "1650.94",
+                            "rating": 1651,
                             "avg": 1644
                         }
                     },
@@ -216,21 +87,21 @@ describe('<AnalyseGraph/>', function () {
                     },
                     "patron": "bronze"
                 },
-                "rating": "1652.57",
-                "ratingDiff": "-1.63"
+                "rating": 1652,
+                "ratingDiff": -1.63
             },
             "opponent": {
                 "color": "black",
                 "name": "Sheldon",
                 "user": {
                     "id": 82031,
-                    "username": "Sheldon",
-                    "displayName": "Станислав",
+                    "name": "Sheldon",
+                    "display": "Станислав",
                     "online": "12h",
                     "perfs": {
                         "maina": {
                             "games": 402,
-                            "rating": "1583.87",
+                            "rating": 1584,
                             "avg": 1598
                         }
                     },
@@ -240,8 +111,8 @@ describe('<AnalyseGraph/>', function () {
                     },
                     "patron": "bronze"
                 },
-                "rating": "1598.38",
-                "ratingDiff": "1.63"
+                "rating": 1598,
+                "ratingDiff": 1.63
             },
             "orientation": "white",
             "analysis": {
@@ -1966,23 +1837,22 @@ describe('<AnalyseGraph/>', function () {
             "pgn": "[Event \"'Личный чемпионат сайта по адвансу - 2018', финал\"]\n[Site \"https://www.chess-online.com/7782247\"]\n[Date \"2020.02.10\"]\n[Round \"?\"]\n[White \"AHDPEI\"]\n[Black \"Sheldon\"]\n[Result \"1/2-1/2\"]\n[WhiteUSCF \"1652\"]\n[BlackUSCF \"1598\"]\n[ECO \"A05\"]\n[EventDate \"2019.04.02\"]\n[Termination \"normal\"]\n\n1. Nf3 Nf6 2. g3 d5 3. Bg2 c5 4. O-O a6 5. c4 dxc4 6. Ne5 Ra7 7. a4 Qd4 8. Nf3\nQd8 9. Na3 Be6 10. Ne5 Qd4 11. Nf3 Qd8 12. a5 Bd5 13. Qa4+ Bc6 14. Qxc4 e6 15.\nd4 Nbd7 16. Ne5 Bxg2 17. Kxg2 cxd4 18. Bf4 Ra8 19. Rfd1 Bc5 20. Nc2 O-O 21. Nxd7\nQxd7 22. Qxc5 Rfc8 23. Qxd4 Qc6+ 24. f3 Qxc2 25. Rd2 Qc4 26. Qxc4 Rxc4 27. e4\nRac8 28. Be5 Kf8 29. Rad1 Ke8 30. Bc3 R4c5 31. Kf2 Rb5 32. Ke3 Ke7 33. Rd4 g6\n34. g4 h5 35. gxh5 Rxh5 36. Rb4 Rc7 37. Rb3 Rh3 38. Kf4 Nd7 39. Bb4+ Kf6 40. Bd6\ng5+ 41. Kg4 Rh4+ 42. Kg3 Rc2 43. h3 Kg6 44. Be7 Ne5 45. Rd8 f6 46. Rxb7 Rf4 47.\nRb3 Nc6 48. Rc8 Nxa5 49. Rbc3 Rxb2 50. Bd6 e5 51. R3c7 Rb7 52. Rxb7 Nxb7 53. Be7\nNa5 54. Rc3 Kh5 55. Kg2 f5 56. Bb4 Nb7 57. Rc7 Nd8 58. Bd2 Ne6 59. Re7 fxe4 60.\nRxe6 exf3+ 61. Kf2 Rh4 62. Rxe5 Rxh3 63. Rxg5+ 1/2-1/2\n"
         };
 
-        const result = new AnalysisResult(props);
         const preloadedState = {
-            analysis: {
-                status: result.state,
-                completed: 100,
-                white: result.white,
-                black: result.black,
-                result: result
-            }
+            game: createGameState(data1)
         }
-
+        
         const store = reduxCreateStore(
             combineReducers({
-                analysis: analyseReducer
+                game: gameReducer
             }), preloadedState);
         
-        const wrapper = mount(<AnalyseGraph id={1} store={store} ply={6} />);
-        expect(wrapper.props().ply).to.be.equal(6);
+        
+        var props = {
+            store: store,
+            height: 400
+        };
+        
+        const wrapper = mount(<AnalyseGraph {...props} />);
+        expect(wrapper.props().height).to.be.equal(400);
     });
 });
