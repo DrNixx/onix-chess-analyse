@@ -1,12 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createStore as reduxCreateStore, combineReducers } from 'redux';
+import { createStore as reduxCreateStore, combineReducers, createStore } from 'redux';
 import { AnalyseGraphAsync } from '../js/analyse/AnalyseGraphAsync';
-import { AnalysisResult } from "../js/analyse/AnalysisResult";
-import { AnalyseRelatedState } from "../js/analyse/AnalyseState";
-import { analyseReducer } from '../js/analyse/AnalyseReducer';
+import { createGameState, gameReducer, GameRelatedState, IGameData } from 'onix-chess';
+import { AnalyseGraphProps } from '../js/analyse/AnalyseGraphProps';
 
-var props = {
+export const AnalyseGraphTest = (container: HTMLElement, props: AnalyseGraphProps) => {
+    ReactDOM.render(React.createElement(AnalyseGraphAsync, props), container, () => { });
+};
+
+var data1: IGameData = {
     "game": {
         "id": 7782247,
         "load": false,
@@ -34,7 +37,6 @@ var props = {
         "createdAt": 1554204125948,
         "private": false,
         "advance": true,
-        "winner": "none",
         "lastMove": "e5g5",
         "check": "h5",
         "moveCentis": [],
@@ -48,7 +50,7 @@ var props = {
         "name": "\"Личный чемпионат сайта по адвансу - 2018\", финал",
         "running": false
     },
-    "clock": {
+    "correspondence": {
         "limit": "Адванс 10+2/21",
         "can_pause": true,
         "parts": [
@@ -71,13 +73,13 @@ var props = {
         "name": "AHDPEI",
         "user": {
             "id": 32141,
-            "username": "AHDPEI",
-            "displayName": "Андрей",
+            "name": "AHDPEI",
+            "display": "Андрей",
             "online": "12h",
             "perfs": {
                 "maina": {
                     "games": 247,
-                    "rating": "1650.94",
+                    "rating": 1651,
                     "avg": 1644
                 }
             },
@@ -87,21 +89,21 @@ var props = {
             },
             "patron": "bronze"
         },
-        "rating": "1652.57",
-        "ratingDiff": "-1.63"
+        "rating": 1652,
+        "ratingDiff": -1.63
     },
     "opponent": {
         "color": "black",
         "name": "Sheldon",
         "user": {
             "id": 82031,
-            "username": "Sheldon",
-            "displayName": "Станислав",
+            "name": "Sheldon",
+            "display": "Станислав",
             "online": "12h",
             "perfs": {
                 "maina": {
                     "games": 402,
-                    "rating": "1583.87",
+                    "rating": 1584,
                     "avg": 1598
                 }
             },
@@ -111,8 +113,8 @@ var props = {
             },
             "patron": "bronze"
         },
-        "rating": "1598.38",
-        "ratingDiff": "1.63"
+        "rating": 1598,
+        "ratingDiff": 1.63
     },
     "orientation": "white",
     "analysis": {
@@ -1837,26 +1839,19 @@ var props = {
     "pgn": "[Event \"'Личный чемпионат сайта по адвансу - 2018', финал\"]\n[Site \"https://www.chess-online.com/7782247\"]\n[Date \"2020.02.10\"]\n[Round \"?\"]\n[White \"AHDPEI\"]\n[Black \"Sheldon\"]\n[Result \"1/2-1/2\"]\n[WhiteUSCF \"1652\"]\n[BlackUSCF \"1598\"]\n[ECO \"A05\"]\n[EventDate \"2019.04.02\"]\n[Termination \"normal\"]\n\n1. Nf3 Nf6 2. g3 d5 3. Bg2 c5 4. O-O a6 5. c4 dxc4 6. Ne5 Ra7 7. a4 Qd4 8. Nf3\nQd8 9. Na3 Be6 10. Ne5 Qd4 11. Nf3 Qd8 12. a5 Bd5 13. Qa4+ Bc6 14. Qxc4 e6 15.\nd4 Nbd7 16. Ne5 Bxg2 17. Kxg2 cxd4 18. Bf4 Ra8 19. Rfd1 Bc5 20. Nc2 O-O 21. Nxd7\nQxd7 22. Qxc5 Rfc8 23. Qxd4 Qc6+ 24. f3 Qxc2 25. Rd2 Qc4 26. Qxc4 Rxc4 27. e4\nRac8 28. Be5 Kf8 29. Rad1 Ke8 30. Bc3 R4c5 31. Kf2 Rb5 32. Ke3 Ke7 33. Rd4 g6\n34. g4 h5 35. gxh5 Rxh5 36. Rb4 Rc7 37. Rb3 Rh3 38. Kf4 Nd7 39. Bb4+ Kf6 40. Bd6\ng5+ 41. Kg4 Rh4+ 42. Kg3 Rc2 43. h3 Kg6 44. Be7 Ne5 45. Rd8 f6 46. Rxb7 Rf4 47.\nRb3 Nc6 48. Rc8 Nxa5 49. Rbc3 Rxb2 50. Bd6 e5 51. R3c7 Rb7 52. Rxb7 Nxb7 53. Be7\nNa5 54. Rc3 Kh5 55. Kg2 f5 56. Bb4 Nb7 57. Rc7 Nd8 58. Bd2 Ne6 59. Re7 fxe4 60.\nRxe6 exf3+ 61. Kf2 Rh4 62. Rxe5 Rxh3 63. Rxg5+ 1/2-1/2\n"
 };
 
-export const AnalyseGraphTest = (container: HTMLElement, props: any) => {
+const preloadedState: GameRelatedState = {
+    game: createGameState(data1)
+}
 
-    const result = new AnalysisResult(props);
-    const preloadedState: AnalyseRelatedState = {
-        analysis: {
-            status: result.state,
-            completed: 100,
-            white: result.white,
-            black: result.black,
-            result: result
-        }
-    }
-
-    const store = reduxCreateStore(
-        combineReducers<AnalyseRelatedState>({
-            analysis: analyseReducer
-        }), preloadedState);
+const store = reduxCreateStore(
+    combineReducers<GameRelatedState>({
+        game: gameReducer
+    }), preloadedState);
 
 
-    ReactDOM.render(React.createElement(AnalyseGraphAsync, { id: 1, store: store, ply: 6 }), container, () => { });
+var props: AnalyseGraphProps = {
+    store: store,
+    height: 400
 };
 
 AnalyseGraphTest(document.getElementById("boardHere")!, props);

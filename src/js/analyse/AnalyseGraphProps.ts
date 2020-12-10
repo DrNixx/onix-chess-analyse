@@ -1,9 +1,6 @@
-import { AnalyseStore } from './AnalyseStore';
+import { GameRelatedStore } from 'onix-chess';
 
 export interface AnalyseGraphProps {
-    id: number;
-    store: AnalyseStore;
+    store: GameRelatedStore;
     height?: number;
-    startPly?: number;
-    ply?: number;
 }

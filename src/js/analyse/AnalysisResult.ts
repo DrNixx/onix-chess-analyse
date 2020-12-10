@@ -1,14 +1,23 @@
 import toSafeInteger from 'lodash-es/toSafeInteger';
-import { Colors } from 'onix-chess';
+import { Colors, IUserAnalysis, IGameAnalysis, IGameData } from 'onix-chess';
 import { register as i18nRegister } from '../i18n';
-import { IUserAnalysis, IGameAnalysis, IView } from './Interfaces';
 import { EvalItem } from './EvalItem';
 
 
+export type AnalyseStatus = "empty" | "unanalysed" | "inprogress" | "ready";
+
 export class AnalysisResult implements IGameAnalysis {
-    public state: string = "empty";
+    public state: AnalyseStatus = "empty";
     
-    public completed: number = 0;
+    private _completed: number = 0;
+
+    public get completed() {
+        return this._completed;
+    }
+
+    public set completed(val) {
+        this._completed = toSafeInteger(val);
+    }
     
     public by?: string;
 
@@ -28,19 +37,17 @@ export class AnalysisResult implements IGameAnalysis {
 
     public analysis: EvalItem[] = [];
 
-    public constructor(data?: IView) {
+    public constructor(data?: IGameData) {
         i18nRegister();
         
         let that = this;
 
         if (data && data.analysis) {
             let analysis = data.analysis;
-            if (analysis.state) {
-                that.state = analysis.state;
-            }
+            that.state = (analysis.state ?? "empty") as AnalyseStatus;
 
             if ((that.state == "inprogress") && (analysis.completed)) {
-                that.completed = toSafeInteger(analysis.completed)
+                that.completed = analysis.completed;
             }
 
             if (analysis.white) {

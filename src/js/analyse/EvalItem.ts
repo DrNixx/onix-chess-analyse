@@ -1,7 +1,7 @@
 import { _, sprintf } from 'onix-core';
-import { Color, Chess as Engine, Colors } from 'onix-chess';
+import { Color, Chess as Engine, Colors, ITreePart, IJudgment, IGlyph } from 'onix-chess';
 import { register as i18nRegister } from '../i18n';
-import { ITreePart, IJudgment, IGlyph } from './Interfaces';
+
 
 export class EvalItem {
 
@@ -57,7 +57,7 @@ export class EvalItem {
         if (data) {
             this.ply = data.ply;
             this.color = Engine.plyToColor(this.ply);
-            this.san = data.san;
+            this.san = data.san!;
             if (data.eval) {
                 this.cp = data.eval.cp;
                 if (!this.cp && (this.cp !== 0)) {
