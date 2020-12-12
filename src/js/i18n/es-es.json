@@ -1,7 +1,6 @@
 {
     "analyse": {
         "title": "Análisis del ordenador",
-        "startpos": "Posición inicial", 
         "advantage": "Ventaja",
         "mateIn": "Mate está a #%d",
         "request": "Solicitud de análisis...",

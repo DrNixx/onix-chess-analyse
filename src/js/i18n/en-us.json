@@ -1,7 +1,6 @@
 {
     "analyse": {
         "title": "Computer analysis",
-        "startpos": "Start position", 
         "advantage": "Advantage",
         "mateIn": "Mate in #%d",
         "request": "Request analysis...",
