@@ -33,7 +33,7 @@
   "homepage": "https://github.com/DrNixx/onix-chess-analyse#readme",
   "dependencies": {
     "lodash-es": "^4.17.14",
-    "onix-chess": "^6.7.1",
+    "onix-chess": "^7.1.2",
     "onix-core": "^4.2.1",
     "react": "^16.14.0",
     "react-bootstrap": "^1.4.0",

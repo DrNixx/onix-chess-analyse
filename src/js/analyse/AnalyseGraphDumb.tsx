@@ -5,14 +5,14 @@ import { SafeAnchor, Container, Row, Col } from 'react-bootstrap';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, Tooltip, CartesianGrid, ReferenceLine } from 'recharts';
 import { register } from '../i18n';
 import { AnalyseGraphProps } from './AnalyseGraphProps';
-import { Color, Colors, GameActions, GameRelatedStore, IGameData, IUserAnalysis } from 'onix-chess';
-import { AnalyseStatus, AnalysisResult } from './AnalysisResult';
+import { AnalyseStatus, Color, Colors, GameActions, GameRelatedStore, IGameData, IUserAnalysis, Chess as ChessEngine } from 'onix-chess';
 
-export interface AnalyseState {
-    analysis: AnalysisResult
+export interface IAnalysisState {
+    status: AnalyseStatus,
+    completed?: number,
 }
 
-export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, AnalyseState> {
+export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, IAnalysisState> {
     private id?: string | number;
 
     private store: GameRelatedStore;
@@ -31,20 +31,23 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
         this.store = store;
         const { game } = store.getState();
         this.id = game?.engine.GameId;
+
         this.state = {
-            analysis: new AnalysisResult(game?.engine.RawData)
+            status: game?.engine.Analysis.state ?? "empty",
+            completed: 0
         };
     }
 
     componentDidMount() {
-        const { store, state } = this;
-        const { analysis } = state;
+        const { store } = this;
         
         this.storeUnsubscribe = store.subscribe(() => {
             this.updateAnalysis();
         });
 
-        if (analysis.state === "empty") {
+        const { game } = store.getState();
+
+        if (game && game.engine.Analysis.state === "empty") {
             this.loadAnalysis();
         }
     }
@@ -58,11 +61,10 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
     private updateAnalysis = () => {
         const { store, state } = this;
         const { game } = store.getState();
-
-        let analysis = new AnalysisResult(game?.engine.RawData);
+        const { status } = state;
 
         this.setState({
-            analysis: analysis
+            status: game?.engine.Analysis.state ?? status
         });
     };
 
@@ -81,10 +83,8 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
                 return response.json();
             })
             .then(function() {
-                const { analysis } = state;
-                analysis.state = "inprogress";
                 that.setState({
-                    analysis: analysis
+                    status: "inprogress"
                 });
             })
             .catch(function(error) {
@@ -112,11 +112,10 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
                     if (data.analysis?.state == "ready") {
                         store.dispatch({type: GameActions.GAME_LOAD_PARTIAL, game: responseAsJson} as GameActions.GameAction);
                     } else {
-                        const { analysis } = state;
-                        analysis.state = (data.analysis?.state ?? "inprogress") as AnalyseStatus;
-                        analysis.completed = data.analysis?.completed ?? 0;
+                        const { status } = state;
                         that.setState({
-                            analysis: analysis
+                            status: (data.analysis?.state ?? status),
+                            completed: data.analysis?.completed
                         });
                     }   
                 }
@@ -156,9 +155,9 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
         }
     }
 
-    renderProgress(progress: number) {
+    renderProgress(progress?: number) {
         const fmt = _("analyse", "completed");
-        const progressStr = sprintf(fmt, progress);
+        const progressStr = sprintf(fmt, progress ?? 0);
         return (
             <span className="analysis-inprogress">
                 { _("analyse", "inprogress")}
@@ -181,12 +180,10 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
         return game?.engine.CurrentPlyCount ?? 0;
     }
 
-    private renderTotalItem = (color: Colors.BW, item: IUserAnalysis, analysis?: AnalysisResult) => {
+    private renderTotalItem = (color: Colors.BW, item: IUserAnalysis, engine?: ChessEngine) => {
         const makeLink = (type: "blunder" | "mistake" | "inaccuracy") => {
             return () => {
-                if (analysis !== undefined) {
-                    this.moveToPly(analysis.findNext(color, this.getCurrentPly(), type));
-                }
+                this.moveToPly(engine?.findNextMistake(color, this.getCurrentPly(), type));
             };
         }
 
@@ -215,9 +212,10 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
         const { game }  = store.getState();
         const { engine } = game;
 
-        const { RawData: gameData, StartPlyCount: startPly, CurrentPlyCount: currentPly, GameId: id } = engine;
-        const { analysis: evals } = state;
-        const { state: status, completed, white, black } = evals;
+        const { StartPlyCount: startPly, CurrentPlyCount: currentPly, GameId: id, Analysis: analysis  } = engine;
+        const { white, black } = analysis
+        const { status, completed } = state;
+        //const { state: status, completed, white, black } = evals;
 
         if (id && (status != "empty")) {
             if (status == "unanalysed") {
@@ -232,11 +230,26 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
                 
                 return renderProgress(completed);
             } else if (status == "ready") {
+                const evals = [];
+                let move = engine.CurrentMove.Begin;
+                while (!move.END_MARKER) {
+                    const turn = move.PlyCount ? ChessEngine.plyToTurn(move.PlyCount) : null;
+                    const name = turn ? "" + turn + (move.sm.color === Color.White ? ". " : "... ") + move.sm.san : _("chess", "startPos");
+
+                    evals.push({
+                        ...move.sm.eval!,
+                        color: move.sm.color!,
+                        ply: move.PlyCount,
+                        name: name
+                    });
+
+                    move = move.Next;
+                }
                 return (
                     <div className="analyse d-block d-lg-flex">
                         <div className="graph-container flex-grow-1">
                             <ResponsiveContainer width="100%" height={height}>
-                                <AreaChart data={evals?.analysis} margin={{ top: 20, right: 20, left: 0, bottom: 0 }} onClick={handleClick}>
+                                <AreaChart data={evals} margin={{ top: 20, right: 20, left: 0, bottom: 0 }} onClick={handleClick}>
                                     <XAxis dataKey="ply" hide={true} />
                                     <YAxis />
                                     <CartesianGrid strokeDasharray="3 3" />
@@ -250,10 +263,10 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, Analyse
                             <Container className="h-100">
                                 <Row className="h-100">
                                     <Col xs={6} lg={12} className="white">
-                                        { renderTotalItem(Color.White, white!, evals) }
+                                        { renderTotalItem(Color.White, white!, engine) }
                                     </Col>
                                     <Col xs={6} lg={12} className="black">
-                                        { renderTotalItem(Color.Black, black!, evals) }
+                                        { renderTotalItem(Color.Black, black!, engine) }
                                     </Col>
                                 </Row>
                             </Container>
