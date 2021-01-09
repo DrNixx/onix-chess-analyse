@@ -12,7 +12,7 @@ export interface IAnalysisState {
     completed?: number,
 }
 
-export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, IAnalysisState> {
+export default class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, IAnalysisState> {
     private id?: string | number;
 
     private store: GameRelatedStore;
@@ -219,7 +219,7 @@ export class AnalyseGraphDumb extends React.Component<AnalyseGraphProps, IAnalys
 
         if (id && (status != "empty")) {
             if (status == "unanalysed") {
-                return renderRequestBtn;
+                return renderRequestBtn();
             } else if (status == "inprogress") {
                 if (!that.timer) {
                     that.timer = setTimeout(() => {

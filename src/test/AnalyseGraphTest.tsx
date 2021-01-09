@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createStore as reduxCreateStore, combineReducers, createStore } from 'redux';
 import { AnalyseGraphAsync } from '../js/analyse/AnalyseGraphAsync';
+import { AnalyseGraph } from '../js/analyse/AnalyseGraph';
 import { createGameState, gameReducer, GameRelatedState, IGameData } from 'onix-chess';
 import { AnalyseGraphProps } from '../js/analyse/AnalyseGraphProps';
 
@@ -1839,8 +1840,584 @@ var data1: IGameData = {
     "pgn": "[Event \"'Личный чемпионат сайта по адвансу - 2018', финал\"]\n[Site \"https://www.chess-online.com/7782247\"]\n[Date \"2020.02.10\"]\n[Round \"?\"]\n[White \"AHDPEI\"]\n[Black \"Sheldon\"]\n[Result \"1/2-1/2\"]\n[WhiteUSCF \"1652\"]\n[BlackUSCF \"1598\"]\n[ECO \"A05\"]\n[EventDate \"2019.04.02\"]\n[Termination \"normal\"]\n\n1. Nf3 Nf6 2. g3 d5 3. Bg2 c5 4. O-O a6 5. c4 dxc4 6. Ne5 Ra7 7. a4 Qd4 8. Nf3\nQd8 9. Na3 Be6 10. Ne5 Qd4 11. Nf3 Qd8 12. a5 Bd5 13. Qa4+ Bc6 14. Qxc4 e6 15.\nd4 Nbd7 16. Ne5 Bxg2 17. Kxg2 cxd4 18. Bf4 Ra8 19. Rfd1 Bc5 20. Nc2 O-O 21. Nxd7\nQxd7 22. Qxc5 Rfc8 23. Qxd4 Qc6+ 24. f3 Qxc2 25. Rd2 Qc4 26. Qxc4 Rxc4 27. e4\nRac8 28. Be5 Kf8 29. Rad1 Ke8 30. Bc3 R4c5 31. Kf2 Rb5 32. Ke3 Ke7 33. Rd4 g6\n34. g4 h5 35. gxh5 Rxh5 36. Rb4 Rc7 37. Rb3 Rh3 38. Kf4 Nd7 39. Bb4+ Kf6 40. Bd6\ng5+ 41. Kg4 Rh4+ 42. Kg3 Rc2 43. h3 Kg6 44. Be7 Ne5 45. Rd8 f6 46. Rxb7 Rf4 47.\nRb3 Nc6 48. Rc8 Nxa5 49. Rbc3 Rxb2 50. Bd6 e5 51. R3c7 Rb7 52. Rxb7 Nxb7 53. Be7\nNa5 54. Rc3 Kh5 55. Kg2 f5 56. Bb4 Nb7 57. Rc7 Nd8 58. Bd2 Ne6 59. Re7 fxe4 60.\nRxe6 exf3+ 61. Kf2 Rh4 62. Rxe5 Rxh3 63. Rxg5+ 1/2-1/2\n"
 };
 
+var data2: IGameData = {
+    game: {
+        id: 7333325,
+        load: false,
+        insite: true,
+        variant: {
+            key: "standard",
+            name: "Standard",
+            shortName: "Std"
+        },
+        speed: "correspondence",
+        perf: "main",
+        rated: true,
+        initialFen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -",
+        fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        player: "white",
+        turns: 0,
+        startedAtTurn: 0,
+        status: {
+            name: "outoftime",
+            subtype: 3,
+            result: 1,
+            result_name: "истекло время"
+        },
+        event: "Regular game",
+        createdAt: 1382477802183,
+        createdBy: 34403,
+        private: false,
+        advance: false,
+        winner: "white",
+        lastMove: "c4b6",
+        check: "d7",
+        moveCentis: [
+            14460952,
+            171324,
+            10758,
+            231579,
+            10235,
+            434571,
+            53997,
+            163353591,
+            1132424,
+            232840442,
+            1857190,
+            8673964,
+            2315214,
+            189944741,
+            5679727,
+            59255732,
+            3104265,
+            431609350,
+            1324380,
+            103142492,
+            782361,
+            99869652,
+            4739967,
+            310479927,
+            10071091,
+            186806422,
+            3448519,
+            68206302,
+            781838,
+            353694575,
+            1889502,
+            84585291,
+            775386,
+            91457341,
+            5972913,
+            356221524,
+            735809,
+            13105839,
+            738630,
+            372376,
+            2784805,
+            130534977,
+            797277,
+            71822671,
+            768034,
+            95629929,
+            751813,
+            301868589,
+            744641,
+            103883,
+            1307229,
+            131590929,
+            757956,
+            249981680,
+            736263,
+            79585986,
+            1109618
+        ],
+        opening: {
+            code: "A00",
+            name: "Start position"
+        }
+    },
+    correspondence: {
+        limit: "5 дней/ход",
+        can_pause: true,
+        parts: [
+            {
+                per: "move",
+                initial: 432000000,
+                increment: 0,
+                min: 432000000
+            }
+        ],
+        white: 0,
+        black: 0,
+        totalTime: 63330542000,
+        lastMoveAt: 1445804744062,
+        serverNow: 1610139742402
+    },
+    player: {
+        color: "white",
+        name: "Fish(ъ)",
+        user: {
+            id: 4250,
+            name: "Fish(ъ)",
+            display: "Fisher Кот",
+            online: "none",
+            perfs: {
+                main: {
+                    games: 12547,
+                    rating: 1899,
+                    avg: 1899
+                }
+            },
+            language: "ru-RU",
+            profile: {
+                country: "RU"
+            },
+            patron: "bronze",
+            status: "bronze",
+            title: ""
+        },
+        rating: 1957
+    },
+    opponent: {
+        color: "black",
+        name: "4 roses",
+        user: {
+            id: 34403,
+            name: "4 roses",
+            display: "Владимир",
+            online: false,
+            perfs: {
+                main: {
+                    games: 168,
+                    rating: 1708,
+                    avg: 1703
+                }
+            },
+            language: "ru-RU",
+            profile: {
+                country: "RU"
+            },
+            patron: "base",
+            status: "base",
+            title: ""
+        },
+        rating: 1711
+    },
+    orientation: "white",
+    analysis: {
+        state: "unanalysed"
+    },
+    treeParts: [
+        {
+            ply: 0,
+            fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+        },
+        {
+            ply: 1,
+            fen: "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+            id: "GwvneGVM",
+            uci: "e2e4",
+            san: "e4"
+        },
+        {
+            ply: 2,
+            fen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+            id: "OYQD+H6a",
+            uci: "e7e5",
+            san: "e5"
+        },
+        {
+            ply: 3,
+            fen: "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+            id: "BKrUZ0Je",
+            uci: "g1f3",
+            san: "Nf3"
+        },
+        {
+            ply: 4,
+            fen: "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+            id: "NV/kVU0x",
+            uci: "b8c6",
+            san: "Nc6"
+        },
+        {
+            ply: 5,
+            fen: "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+            id: "ElG7lw87",
+            uci: "f1b5",
+            san: "Bb5"
+        },
+        {
+            ply: 6,
+            fen: "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+            id: "EifBOCCc",
+            uci: "g8f6",
+            san: "Nf6"
+        },
+        {
+            ply: 7,
+            fen: "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 4",
+            id: "YZP8gIn4",
+            uci: "d2d3",
+            san: "d3"
+        },
+        {
+            ply: 8,
+            fen: "r1bqk2r/pppp1ppp/2n2n2/1Bb1p3/4P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+            id: "UpJfZELa",
+            uci: "f8c5",
+            san: "Bc5"
+        },
+        {
+            ply: 9,
+            fen: "r1bqk2r/pppp1ppp/2n2n2/1Bb1p3/4P3/2PP1N2/PP3PPP/RNBQK2R b KQkq - 0 5",
+            id: "hIoXd7a+",
+            uci: "c2c3",
+            san: "c3"
+        },
+        {
+            ply: 10,
+            fen: "r1bq1rk1/pppp1ppp/2n2n2/1Bb1p3/4P3/2PP1N2/PP3PPP/RNBQK2R w KQ - 1 6",
+            id: "fCy+Ja2f",
+            uci: "e8g8",
+            san: "O-O"
+        },
+        {
+            ply: 11,
+            fen: "r1bq1rk1/pppp1ppp/2n2n2/1Bb1p3/4P3/2PP1N2/PP3PPP/RNBQ1RK1 b - - 2 6",
+            id: "11o9mXMy",
+            uci: "e1g1",
+            san: "O-O"
+        },
+        {
+            ply: 12,
+            fen: "r1bq1rk1/ppp2ppp/2n2n2/1Bbpp3/4P3/2PP1N2/PP3PPP/RNBQ1RK1 w - - 0 7",
+            id: "jzp9SY4Y",
+            uci: "d7d5",
+            san: "d5"
+        },
+        {
+            ply: 13,
+            fen: "r1bq1rk1/ppp2ppp/2n2n2/1Bbpp3/4P3/2PP1N2/PP1N1PPP/R1BQ1RK1 b - - 1 7",
+            id: "Zf2pkZtE",
+            uci: "b1d2",
+            san: "Nbd2"
+        },
+        {
+            ply: 14,
+            fen: "r1bq1rk1/ppp2ppp/2n2n2/1Bb1p3/4p3/2PP1N2/PP1N1PPP/R1BQ1RK1 w - - 0 8",
+            id: "tPBDwa4G",
+            uci: "d5e4",
+            san: "dxe4"
+        },
+        {
+            ply: 15,
+            fen: "r1bq1rk1/ppp2ppp/2n2n2/1Bb1p3/4P3/2P2N2/PP1N1PPP/R1BQ1RK1 b - - 0 8",
+            id: "tUMHaPP/",
+            uci: "d3e4",
+            san: "dxe4"
+        },
+        {
+            ply: 16,
+            fen: "r1bq1rk1/1pp2ppp/2n2n2/pBb1p3/4P3/2P2N2/PP1N1PPP/R1BQ1RK1 w - - 0 9",
+            id: "jRBvyjuX",
+            uci: "a7a5",
+            san: "a5"
+        },
+        {
+            ply: 17,
+            fen: "r1bq1rk1/1pp2ppp/2n2n2/pBb1p3/4P3/2P2N2/PP1NQPPP/R1B2RK1 b - - 1 9",
+            id: "wMG9FVX1",
+            uci: "d1e2",
+            san: "Qe2"
+        },
+        {
+            ply: 18,
+            fen: "r1b2rk1/1pp1qppp/2n2n2/pBb1p3/4P3/2P2N2/PP1NQPPP/R1B2RK1 w - - 2 10",
+            id: "EVln1Kt5",
+            uci: "d8e7",
+            san: "Qe7"
+        },
+        {
+            ply: 19,
+            fen: "r1b2rk1/1pp1qppp/2n2n2/pBb1p3/P3P3/2P2N2/1P1NQPPP/R1B2RK1 b - - 0 10",
+            id: "jIbeHM5B",
+            uci: "a2a4",
+            san: "a4"
+        },
+        {
+            ply: 20,
+            fen: "r4rk1/1ppbqppp/2n2n2/pBb1p3/P3P3/2P2N2/1P1NQPPP/R1B2RK1 w - - 1 11",
+            id: "EqZb/xD+",
+            uci: "c8d7",
+            san: "Bd7"
+        },
+        {
+            ply: 21,
+            fen: "r4rk1/1ppbqppp/2n2n2/pBb1p3/P3P3/1NP2N2/1P2QPPP/R1B2RK1 b - - 2 11",
+            id: "QJd7M+dU",
+            uci: "d2b3",
+            san: "Nb3"
+        },
+        {
+            ply: 22,
+            fen: "r4rk1/1ppbqppp/1bn2n2/pB2p3/P3P3/1NP2N2/1P2QPPP/R1B2RK1 w - - 3 12",
+            id: "lVTUBkKQ",
+            uci: "c5b6",
+            san: "Bb6"
+        },
+        {
+            ply: 23,
+            fen: "r4rk1/1ppbqppp/1bn2n2/pB2p1B1/P3P3/1NP2N2/1P2QPPP/R4RK1 b - - 4 12",
+            id: "jrhN+Tc5",
+            uci: "c1g5",
+            san: "Bg5"
+        },
+        {
+            ply: 24,
+            fen: "r2r2k1/1ppbqppp/1bn2n2/pB2p1B1/P3P3/1NP2N2/1P2QPPP/R4RK1 w - - 5 13",
+            id: "7xBizqCt",
+            uci: "f8d8",
+            san: "Rfd8"
+        },
+        {
+            ply: 25,
+            fen: "r2r2k1/1ppbqppp/1bn2n2/pB2p1B1/P3P3/2P2N2/1P1NQPPP/R4RK1 b - - 6 13",
+            id: "3mHRfFzs",
+            uci: "b3d2",
+            san: "Nbd2"
+        },
+        {
+            ply: 26,
+            fen: "r2r2k1/nppbqppp/1b3n2/pB2p1B1/P3P3/2P2N2/1P1NQPPP/R4RK1 w - - 7 14",
+            id: "9mS/YeGJ",
+            uci: "c6a7",
+            san: "Na7"
+        },
+        {
+            ply: 27,
+            fen: "r2r2k1/nppBqppp/1b3n2/p3p1B1/P3P3/2P2N2/1P1NQPPP/R4RK1 b - - 0 14",
+            id: "3llguwiV",
+            uci: "b5d7",
+            san: "Bxd7"
+        },
+        {
+            ply: 28,
+            fen: "r5k1/npprqppp/1b3n2/p3p1B1/P3P3/2P2N2/1P1NQPPP/R4RK1 w - - 0 15",
+            id: "DllkBepT",
+            uci: "d8d7",
+            san: "Rxd7"
+        },
+        {
+            ply: 29,
+            fen: "r5k1/npprqppp/1b3n2/p3p1B1/P1N1P3/2P2N2/1P2QPPP/R4RK1 b - - 1 15",
+            id: "kbnliu5k",
+            uci: "d2c4",
+            san: "Nc4"
+        },
+        {
+            ply: 30,
+            fen: "r5k1/1pprqppp/1bn2n2/p3p1B1/P1N1P3/2P2N2/1P2QPPP/R4RK1 w - - 2 16",
+            id: "anQ1iBl3",
+            uci: "a7c6",
+            san: "Nc6"
+        },
+        {
+            ply: 31,
+            fen: "r5k1/1pprqppp/1Nn2n2/p3p1B1/P3P3/2P2N2/1P2QPPP/R4RK1 b - - 0 16",
+            id: "WslZThhu",
+            uci: "c4b6",
+            san: "Nxb6"
+        },
+        {
+            ply: 32,
+            fen: "r5k1/1p1rqppp/1pn2n2/p3p1B1/P3P3/2P2N2/1P2QPPP/R4RK1 w - - 0 17",
+            id: "p4TefBO/",
+            uci: "c7b6",
+            san: "cxb6"
+        },
+        {
+            ply: 33,
+            fen: "r5k1/1p1rqppp/1pn2n2/p3p1B1/P3P3/2P5/1P1NQPPP/R4RK1 b - - 1 17",
+            id: "sg+FDd24",
+            uci: "f3d2",
+            san: "Nd2"
+        },
+        {
+            ply: 34,
+            fen: "r5k1/1p1r1ppp/1pn1qn2/p3p1B1/P3P3/2P5/1P1NQPPP/R4RK1 w - - 2 18",
+            id: "PQHonak6",
+            uci: "e7e6",
+            san: "Qe6"
+        },
+        {
+            ply: 35,
+            fen: "r5k1/1p1r1ppp/1pn1qn2/p3p1B1/P1N1P3/2P5/1P2QPPP/R4RK1 b - - 3 18",
+            id: "J8SVpOyT",
+            uci: "d2c4",
+            san: "Nc4"
+        },
+        {
+            ply: 36,
+            fen: "r5k1/1p1rnppp/1p2qn2/p3p1B1/P1N1P3/2P5/1P2QPPP/R4RK1 w - - 4 19",
+            id: "XApAe+PT",
+            uci: "c6e7",
+            san: "Ne7"
+        },
+        {
+            ply: 37,
+            fen: "r5k1/1p1rnppp/1p2qB2/p3p3/P1N1P3/2P5/1P2QPPP/R4RK1 b - - 0 19",
+            id: "DIb7D4H5",
+            uci: "g5f6",
+            san: "Bxf6"
+        },
+        {
+            ply: 38,
+            fen: "r5k1/1p1rnppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/R4RK1 w - - 0 20",
+            id: "yEqLQgYe",
+            uci: "e6f6",
+            san: "Qxf6"
+        },
+        {
+            ply: 39,
+            fen: "r5k1/1p1rnppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/R2R2K1 b - - 1 20",
+            id: "+fHhEUfv",
+            uci: "f1d1",
+            san: "Rfd1"
+        },
+        {
+            ply: 40,
+            fen: "3r2k1/1p1rnppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/R2R2K1 w - - 2 21",
+            id: "YSVZBVL5",
+            uci: "a8d8",
+            san: "Rad8"
+        },
+        {
+            ply: 41,
+            fen: "3r2k1/1p1Rnppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/R5K1 b - - 0 21",
+            id: "jn1rTEMN",
+            uci: "d1d7",
+            san: "Rxd7"
+        },
+        {
+            ply: 42,
+            fen: "6k1/1p1rnppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/R5K1 w - - 0 22",
+            id: "bgygSj/Y",
+            uci: "d8d7",
+            san: "Rxd7"
+        },
+        {
+            ply: 43,
+            fen: "6k1/1p1rnppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/3R2K1 b - - 1 22",
+            id: "iyRat54o",
+            uci: "a1d1",
+            san: "Rd1"
+        },
+        {
+            ply: 44,
+            fen: "6k1/1p2nppp/1p3q2/p3p3/P1N1P3/2P5/1P2QPPP/3r2K1 w - - 0 23",
+            id: "v8BkTQrM",
+            uci: "d7d1",
+            san: "Rxd1+"
+        },
+        {
+            ply: 45,
+            fen: "6k1/1p2nppp/1p3q2/p3p3/P1N1P3/2P5/1P3PPP/3Q2K1 b - - 0 23",
+            id: "jiJfVlQP",
+            uci: "e2d1",
+            san: "Qxd1"
+        },
+        {
+            ply: 46,
+            fen: "6k1/1p2npp1/1p3q1p/p3p3/P1N1P3/2P5/1P3PPP/3Q2K1 w - - 0 24",
+            id: "5NHg1NIz",
+            uci: "h7h6",
+            san: "h6"
+        },
+        {
+            ply: 47,
+            fen: "6k1/1p1Qnpp1/1p3q1p/p3p3/P1N1P3/2P5/1P3PPP/6K1 b - - 1 24",
+            id: "szYGB/Ya",
+            uci: "d1d7",
+            san: "Qd7"
+        },
+        {
+            ply: 48,
+            fen: "6k1/1p1Qnpp1/1pq4p/p3p3/P1N1P3/2P5/1P3PPP/6K1 w - - 2 25",
+            id: "OnGML6jZ",
+            uci: "f6c6",
+            san: "Qc6"
+        },
+        {
+            ply: 49,
+            fen: "6k1/1p2npp1/1pQ4p/p3p3/P1N1P3/2P5/1P3PPP/6K1 b - - 0 25",
+            id: "ngi3PMPa",
+            uci: "d7c6",
+            san: "Qxc6"
+        },
+        {
+            ply: 50,
+            fen: "6k1/1p3pp1/1pn4p/p3p3/P1N1P3/2P5/1P3PPP/6K1 w - - 0 26",
+            id: "BMIV71O9",
+            uci: "e7c6",
+            san: "Nxc6"
+        },
+        {
+            ply: 51,
+            fen: "6k1/1p3pp1/1pn4p/p3p3/P1N1P3/2P5/1P3PPP/5K2 b - - 1 26",
+            id: "KxWUbp28",
+            uci: "g1f1",
+            san: "Kf1"
+        },
+        {
+            ply: 52,
+            fen: "5k2/1p3pp1/1pn4p/p3p3/P1N1P3/2P5/1P3PPP/5K2 w - - 2 27",
+            id: "zNAPZVlN",
+            uci: "g8f8",
+            san: "Kf8"
+        },
+        {
+            ply: 53,
+            fen: "5k2/1p3pp1/1pn4p/p3p3/P1N1P3/2P5/1P2KPPP/8 b - - 3 27",
+            id: "MnZXE2CP",
+            uci: "f1e2",
+            san: "Ke2"
+        },
+        {
+            ply: 54,
+            fen: "8/1p2kpp1/1pn4p/p3p3/P1N1P3/2P5/1P2KPPP/8 w - - 4 28",
+            id: "5jkOt3ah",
+            uci: "f8e7",
+            san: "Ke7"
+        },
+        {
+            ply: 55,
+            fen: "8/1p2kpp1/1pn4p/p3p3/P1N1P3/2PK4/1P3PPP/8 b - - 5 28",
+            id: "O376D6/P",
+            uci: "e2d3",
+            san: "Kd3"
+        },
+        {
+            ply: 56,
+            fen: "8/1p1k1pp1/1pn4p/p3p3/P1N1P3/2PK4/1P3PPP/8 w - - 6 29",
+            id: "CTkCW0nZ",
+            uci: "e7d7",
+            san: "Kd7"
+        },
+        {
+            ply: 57,
+            fen: "8/1p1k1pp1/1Nn4p/p3p3/P3P3/2PK4/1P3PPP/8 b - - 0 29",
+            id: "2gGVedcl",
+            uci: "c4b6",
+            san: "Nxb6+"
+        }
+    ],
+    finalFen: "8/1p1k1pp1/1Nn4p/p3p3/P3P3/2PK4/1P3PPP/8 b - - 0 30",
+    "pgn":"[Event \"Regular game\"]\n[Site \"https://www.chess-online.com/7333325\"]\n[Date \"2015.10.25\"]\n[Round \"?\"]\n[White \"Fish(ъ)\"]\n[Black \"4 roses\"]\n[Result \"1-0\"]\n[WhiteRating \"1957\"]\n[BlackRating \"1711\"]\n[ECO \"\"]\n[EventDate \"2013.10.22\"]\n[Termination \"time forfeit\"]\n\n1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. d3 Bc5 5. c3 O-O 6. O-O d5 7. Nbd2 dxe4 8.\ndxe4 a5 9. Qe2 Qe7 10. a4 Bd7 11. Nb3 Bb6 12. Bg5 Rfd8 13. Nbd2 Na7 14. Bxd7\nRxd7 15. Nc4 Nc6 16. Nxb6 cxb6 17. Nd2 Qe6 18. Nc4 Ne7 19. Bxf6 Qxf6 20. Rfd1\nRad8 21. Rxd7 Rxd7 22. Rd1 Rxd1+ 23. Qxd1 h6 24. Qd7 Qc6 25. Qxc6 Nxc6 26. Kf1\nKf8 27. Ke2 Ke7 28. Kd3 Kd7 29. Nxb6+ 1-0\n"
+};
+
 const preloadedState: GameRelatedState = {
-    game: createGameState(data1)
+    game: createGameState(data2)
 }
 
 const store = reduxCreateStore(
