@@ -5,9 +5,28 @@ import { AnalyseGraphAsync } from '../js/analyse/AnalyseGraphAsync';
 import { AnalyseGraph } from '../js/analyse/AnalyseGraph';
 import { createGameState, gameReducer, GameRelatedState, IGameData } from 'onix-chess';
 import { AnalyseGraphProps } from '../js/analyse/AnalyseGraphProps';
+import { Tab, Tabs } from 'react-bootstrap';
+
+class AnalyseGraphTestComponent extends React.Component<AnalyseGraphProps, {}> {
+    render() {
+        return (
+            <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
+                <Tab eventKey="home" title="Home">
+                    12345
+                </Tab>
+                <Tab eventKey="profile" title="Profile">
+                    <AnalyseGraph {...this.props} />
+                </Tab>
+                <Tab eventKey="contact" title="Contact" disabled>
+                    12345
+                </Tab>
+            </Tabs>
+        );
+    }
+}
 
 export const AnalyseGraphTest = (container: HTMLElement, props: AnalyseGraphProps) => {
-    ReactDOM.render(React.createElement(AnalyseGraphAsync, props), container, () => { });
+    ReactDOM.render(React.createElement(AnalyseGraphTestComponent, props), container, () => { });
 };
 
 var data1: IGameData = {
@@ -2417,7 +2436,7 @@ var data2: IGameData = {
 };
 
 const preloadedState: GameRelatedState = {
-    game: createGameState(data2)
+    game: createGameState(data1)
 }
 
 const store = reduxCreateStore(
